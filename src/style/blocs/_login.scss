@@ -1,29 +1,72 @@
 .loginblock {
     margin: auto;
 
-    form {
-        padding: 4rem;
-        border: 1px solid $couleurDeBordure;
-        display: flex;
-        flex-direction: column;
-        background: $couleurFondLogin;
-    }
-
     .loginblock-switch {
-        display: flex;
 
-        .inactif {
-            background: $couleurBtnInactif;
-            color: $couleurPrimaire;
-        }
+        display: grid;
+        grid-template-columns: 50% 50%;
 
-        button {
-            border-radius: 0;
-            width: 50%;
-            border-bottom: none;
+        li {
+            text-align: center;
+            transition: 0.2s;
+
+            border-radius: 10px 10px 0px 0px;
             padding-top: 0.6rem;
             padding-bottom: 0.6rem;
         }
 
+        li.active-btn {
+            background: $couleurPrimaire;
+            color: $couleurTexteInverse;
+            cursor: default;
+            
+            &:hover {
+                background: $couleurSecondaire;
+            }
+        }
+
+        li:not(.active-btn) {
+            background: $couleurBtnInactif;
+            color: $couleurPrimaire;
+            cursor: pointer;
+
+            &:hover {
+                background: $couleurFondTache;
+                // transform: translateX(3px);
+                transform: scale(1.07);
+            }
+        }
+    }
+
+    form {
+        padding: 2rem 4rem 3rem 4rem;
+        border: 1px solid $couleurDeBordure;
+        display: flex;
+        flex-direction: column;
+        background: $couleurFondLogin;
+
+        p {
+            font-weight: bold;
+            text-decoration: underline;
+            padding-bottom: 2rem;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        input[type=text] {
+            border: 1px solid $couleurBordureInputText;
+            font-size: 1.2rem;
+            padding: 0.2rem;
+
+            &:hover {
+                border: 1px solid $couleurPrimaire;
+            }
+        }
+
+        input[type=button] {
+            font-size: 1rem;
+            margin-top: 2rem;
+            padding: 0.4rem;
+        }
     }
 }

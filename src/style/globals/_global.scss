@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
     color: $couleurTexte;
+    box-sizing: border-box;
+    list-style-type: none;
+    outline: none;
+    border: none;
+    text-decoration: none;
 }
 
 #root {
@@ -36,6 +41,8 @@ button,
     &:hover {
         background-color: $couleurSecondaire;
         border: 1px solid $couleurSecondaire;
+        // transform: translateX(3px);
+        transform: scale(1.07);
     }
 }
 

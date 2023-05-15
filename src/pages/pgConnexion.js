@@ -1,6 +1,6 @@
 import React from 'react';
 import NoheaderComponent from '../components/NoheaderComponent'
-import LoginComponent from '../components/LoginComponent';
+import LoginComponent from '../components/LoginComponent/LoginComponent';
 import FooterComponent from '../components/FooterComponent';
 
 const pgConnexion = () => {
