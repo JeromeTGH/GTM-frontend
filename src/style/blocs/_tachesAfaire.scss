@@ -1,0 +1,49 @@
+.main-container-tachesAfaire {
+    display: flex;
+    border: 2px solid $couleurDeBordure;
+    border-radius: 16px;
+    text-align: center;
+    background: $couleurFondTache;
+    margin: 1rem;
+
+    .main-container-tachesAfaire-left,
+    .main-container-tachesAfaire-right {
+        width: 50%;
+        margin: 1.2rem;
+        padding: 1.2rem 2rem;
+        border: 1px solid $couleurDeBordure;
+        border-radius: 16px;
+        background: $couleurFondTache2;
+
+        .main-container-tachesAfaire-left-btn {
+            padding-top: 1.4rem;
+        }
+
+        .main-container-tachesAfaire-left-title,
+        .main-container-tachesAfaire-right-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            border-bottom: 2px solid $couleurDeBordure;
+            padding-bottom: 0.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .main-container-tachesAfaire-left-date {
+            font-style: italic;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid $couleurDeBordure;
+            padding: 0.4rem;
+        }
+
+    }
+}

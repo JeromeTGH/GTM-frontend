@@ -1,0 +1,29 @@
+.loginblock {
+    margin: auto;
+
+    form {
+        padding: 4rem;
+        border: 1px solid $couleurDeBordure;
+        display: flex;
+        flex-direction: column;
+        background: $couleurFondLogin;
+    }
+
+    .loginblock-switch {
+        display: flex;
+
+        .inactif {
+            background: $couleurBtnInactif;
+            color: $couleurPrimaire;
+        }
+
+        button {
+            border-radius: 0;
+            width: 50%;
+            border-bottom: none;
+            padding-top: 0.6rem;
+            padding-bottom: 0.6rem;
+        }
+
+    }
+}

@@ -1,0 +1,77 @@
+.main-container-profil {
+    display: flex;
+
+    .main-container-profil-left,
+    .main-container-profil-right {
+        width: 50%;
+        height: fit-content;
+        margin: 2rem;
+        padding: 1.2rem 2rem;
+        border: 2px solid $couleurDeBordure;
+        border-radius: 16px;
+
+        .main-container-profil-left-btn {
+            text-align: right;
+            padding-top: 0.4rem;
+        }
+
+        .main-container-profil-left-title,
+        .main-container-profil-right-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            border-bottom: 2px solid $couleurDeBordure;
+            padding-bottom: 0.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .main-container-profil-left-creationdate {
+            font-style: italic;
+            font-size: 0.8rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .main-container-profil-left-lblEmail,
+        .main-container-profil-left-lblPseudo {
+            font-weight: bold;
+            margin-top: 2.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .main-container-profil-left-txtEmail,
+        .main-container-profil-left-txtPseudo {
+            font-style: italic;
+            padding-left: 1.2rem;
+            color: $couleurPrimaire;
+        }
+
+        .main-container-profil-right-tachesAfaire {
+            list-style: none;
+            border: 2px solid $couleurDeBordure;
+            border-radius: 16px;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            background: $couleurFondTache;
+
+            .main-container-profil-right-tachesAfaire-title {
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .main-container-profil-right-tachesAfaire-description {
+                font-size: 0.8rem;
+                padding-bottom: 0.8rem;
+                padding-top: 0.8rem;
+                font-style: italic;
+            }
+
+            .main-container-profil-right-tachesAfaire-btns {
+                text-align: right;
+            }
+
+            input[type=text] {
+                width: 100%;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,305 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #333333;
+}
+
+body {
+  background-color: #eeeaf5;
+  font-family: sans-serif;
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #7e2358;
+  font-weight: bold;
+}
+a:hover {
+  color: #be6398;
+}
+
+button,
+.btn {
+  text-decoration: none;
+  color: #FFFFFF;
+  background: #7e2358;
+  padding: 6px;
+  border: 1px solid #7e2358;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover,
+.btn:hover {
+  background-color: #be6398;
+  border: 1px solid #be6398;
+}
+
+.souligne {
+  text-decoration: underline;
+}
+
+header {
+  display: block;
+  background-color: #f3f1f9;
+  box-shadow: 0 0 20px 0 #ccbbcc;
+  padding: 0.7rem 2rem;
+}
+header .header-container {
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+  align-items: center;
+  max-width: 1400px;
+  margin: auto;
+}
+header .header-container .header-container-logo {
+  display: block;
+}
+header .header-container .header-container-logo a {
+  font-size: 2rem;
+}
+header .header-container .header-container-navmenu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+header .header-container .header-container-navmenu .header-container-navmenu-ul {
+  display: flex;
+  align-items: center;
+}
+header .header-container .header-container-navmenu .header-container-navmenu-ul li {
+  list-style: none;
+  padding: 0 1rem;
+}
+header .header-container .header-container-navmenu .header-container-navmenu-ul li a {
+  font-size: 1rem;
+}
+header .header-container .header-container-btnLogInOut {
+  display: block;
+  margin-left: 0.5rem;
+}
+
+.loginblock {
+  margin: auto;
+}
+.loginblock form {
+  padding: 4rem;
+  border: 1px solid #AA88AA;
+  display: flex;
+  flex-direction: column;
+  background: #f9f7ff;
+}
+.loginblock .loginblock-switch {
+  display: flex;
+}
+.loginblock .loginblock-switch .inactif {
+  background: #ead6dd;
+  color: #7e2358;
+}
+.loginblock .loginblock-switch button {
+  border-radius: 0;
+  width: 50%;
+  border-bottom: none;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+main {
+  display: block;
+}
+main .main-container {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: auto;
+}
+
+footer {
+  display: block;
+  padding: 0.7rem 2rem;
+  background-color: #f3f1f9;
+  box-shadow: 0 0 20px 0 #ccbbcc;
+}
+footer .footer-container {
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.main-container-profil {
+  display: flex;
+}
+.main-container-profil .main-container-profil-left,
+.main-container-profil .main-container-profil-right {
+  width: 50%;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 2rem;
+  padding: 1.2rem 2rem;
+  border: 2px solid #AA88AA;
+  border-radius: 16px;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-left-btn,
+.main-container-profil .main-container-profil-right .main-container-profil-left-btn {
+  text-align: right;
+  padding-top: 0.4rem;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-left-title,
+.main-container-profil .main-container-profil-left .main-container-profil-right-title,
+.main-container-profil .main-container-profil-right .main-container-profil-left-title,
+.main-container-profil .main-container-profil-right .main-container-profil-right-title {
+  font-weight: bold;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #AA88AA;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.8rem;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-left-creationdate,
+.main-container-profil .main-container-profil-right .main-container-profil-left-creationdate {
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-bottom: 1.4rem;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-left-lblEmail,
+.main-container-profil .main-container-profil-left .main-container-profil-left-lblPseudo,
+.main-container-profil .main-container-profil-right .main-container-profil-left-lblEmail,
+.main-container-profil .main-container-profil-right .main-container-profil-left-lblPseudo {
+  font-weight: bold;
+  margin-top: 2.4rem;
+  margin-bottom: 0.4rem;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-left-txtEmail,
+.main-container-profil .main-container-profil-left .main-container-profil-left-txtPseudo,
+.main-container-profil .main-container-profil-right .main-container-profil-left-txtEmail,
+.main-container-profil .main-container-profil-right .main-container-profil-left-txtPseudo {
+  font-style: italic;
+  padding-left: 1.2rem;
+  color: #7e2358;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-right-tachesAfaire,
+.main-container-profil .main-container-profil-right .main-container-profil-right-tachesAfaire {
+  list-style: none;
+  border: 2px solid #AA88AA;
+  border-radius: 16px;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background: #dabece;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-title,
+.main-container-profil .main-container-profil-right .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-description,
+.main-container-profil .main-container-profil-right .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-description {
+  font-size: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  font-style: italic;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-btns,
+.main-container-profil .main-container-profil-right .main-container-profil-right-tachesAfaire .main-container-profil-right-tachesAfaire-btns {
+  text-align: right;
+}
+.main-container-profil .main-container-profil-left .main-container-profil-right-tachesAfaire input[type=text],
+.main-container-profil .main-container-profil-right .main-container-profil-right-tachesAfaire input[type=text] {
+  width: 100%;
+}
+
+.main-container-tachesAfaire {
+  display: flex;
+  border: 2px solid #AA88AA;
+  border-radius: 16px;
+  text-align: center;
+  background: #dabece;
+  margin: 1rem;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left,
+.main-container-tachesAfaire .main-container-tachesAfaire-right {
+  width: 50%;
+  margin: 1.2rem;
+  padding: 1.2rem 2rem;
+  border: 1px solid #AA88AA;
+  border-radius: 16px;
+  background: #f0def6;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left .main-container-tachesAfaire-left-btn,
+.main-container-tachesAfaire .main-container-tachesAfaire-right .main-container-tachesAfaire-left-btn {
+  padding-top: 1.4rem;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left .main-container-tachesAfaire-left-title,
+.main-container-tachesAfaire .main-container-tachesAfaire-left .main-container-tachesAfaire-right-title,
+.main-container-tachesAfaire .main-container-tachesAfaire-right .main-container-tachesAfaire-left-title,
+.main-container-tachesAfaire .main-container-tachesAfaire-right .main-container-tachesAfaire-right-title {
+  font-weight: bold;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #AA88AA;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.8rem;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left .main-container-tachesAfaire-left-date,
+.main-container-tachesAfaire .main-container-tachesAfaire-right .main-container-tachesAfaire-left-date {
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left table,
+.main-container-tachesAfaire .main-container-tachesAfaire-right table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.main-container-tachesAfaire .main-container-tachesAfaire-left th,
+.main-container-tachesAfaire .main-container-tachesAfaire-left td,
+.main-container-tachesAfaire .main-container-tachesAfaire-right th,
+.main-container-tachesAfaire .main-container-tachesAfaire-right td {
+  border: 1px solid #AA88AA;
+  padding: 0.4rem;
+}
+
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-entete {
+  display: flex;
+  margin: 2rem;
+  padding: 1.2rem 2rem;
+  border: 2px solid #AA88AA;
+  border-radius: 16px;
+  align-items: center;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-entete .main-container-detailTacheAfaire-entete-libelle, .main-container-detailTacheAfaire .main-container-detailTacheAfaire-entete .main-container-detailTacheAfaire-entete-numeroListe {
+  font-weight: bold;
+  font-size: 1.8rem;
+  white-space: nowrap;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-entete .main-container-detailTacheAfaire-entete-numeroListe {
+  padding-left: 0.4rem;
+  color: #7e2358;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-entete .main-container-detailTacheAfaire-entete-btn {
+  width: 100%;
+  text-align: right;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-ligne {
+  display: flex;
+  margin: 0.5rem 4rem;
+  padding: 1.2rem;
+  border: 1px solid #AA88AA;
+  background: #f0def6;
+  border-radius: 16px;
+  align-items: center;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-ligne .main-container-detailTacheAfaire-ligne-checkbox {
+  padding-right: 1rem;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-ligne .main-container-detailTacheAfaire-ligne-blocTache .main-container-detailTacheAfaire-ligne-blocTache-libelle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: underline;
+  padding-bottom: 0.4rem;
+}
+.main-container-detailTacheAfaire .main-container-detailTacheAfaire-ligne .main-container-detailTacheAfaire-ligne-blocTache .main-container-detailTacheAfaire-ligne-blocTache-description {
+  font-size: 0.9rem;
+  font-style: italic;
+}

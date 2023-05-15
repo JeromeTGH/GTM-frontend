@@ -1,0 +1,50 @@
+header {
+    display: block;
+    background-color: $couleurFondNav;
+    box-shadow: 0 0 20px 0 $couleurOmbreNav;
+    padding: 0.7rem 2rem;
+
+    .header-container {
+        display: grid;
+        grid-template-columns: min-content auto min-content;
+        align-items: center;
+        max-width: $windowMaxSize;
+        margin: auto;
+
+        .header-container-logo {
+            display: block;
+
+            a {
+                font-size: 2rem;
+            }
+        }
+
+        .header-container-navmenu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .header-container-navmenu-ul {
+                display: flex;
+                align-items: center;
+
+                li {
+                    list-style: none;
+                    padding: 0 1rem;
+
+                    a {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+        }
+
+        .header-container-btnLogInOut {
+            display: block;
+            margin-left: 0.5rem;
+        }
+
+    }
+
+}

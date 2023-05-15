@@ -1,0 +1,14 @@
+footer {
+    display: block;
+    padding: 0.7rem 2rem;
+    background-color: $couleurFondNav;
+    box-shadow: 0 0 20px 0 $couleurOmbreNav;
+
+    .footer-container {
+        max-width: $windowMaxSize;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,59 @@
+.main-container-detailTacheAfaire {
+
+    .main-container-detailTacheAfaire-entete {
+        display: flex;
+        margin: 2rem;
+        padding: 1.2rem 2rem;
+        border: 2px solid $couleurDeBordure;
+        border-radius: 16px;
+        align-items: center;
+
+        .main-container-detailTacheAfaire-entete-libelle, .main-container-detailTacheAfaire-entete-numeroListe {
+            font-weight: bold;
+            font-size: 1.8rem;
+            white-space: nowrap;
+        }
+
+        .main-container-detailTacheAfaire-entete-numeroListe {
+            padding-left: 0.4rem;
+            color: $couleurPrimaire;
+        }
+
+        .main-container-detailTacheAfaire-entete-btn {
+            width: 100%;
+            text-align: right;
+        }
+    }
+
+    .main-container-detailTacheAfaire-ligne {
+        display: flex;
+        margin: 0.5rem 4rem;
+        padding: 1.2rem;
+        border: 1px solid $couleurDeBordure;
+        background: $couleurFondTache2;
+        border-radius: 16px;
+        align-items: center;
+
+        .main-container-detailTacheAfaire-ligne-checkbox {
+            padding-right: 1rem;
+        }
+
+        .main-container-detailTacheAfaire-ligne-blocTache {
+            .main-container-detailTacheAfaire-ligne-blocTache-libelle {
+                font-size: 1.1rem;
+                font-weight: bold;
+                text-decoration: underline;
+                padding-bottom: 0.4rem;
+            }
+
+            .main-container-detailTacheAfaire-ligne-blocTache-description {
+                font-size: 0.9rem;
+                font-style: italic;
+            }
+        }
+
+
+
+    }
+
+}

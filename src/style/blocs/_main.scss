@@ -1,0 +1,11 @@
+main {
+    display: block;
+
+    .main-container {
+        padding: 1rem;
+        // border: 1px solid $couleurDeBordure;
+        max-width: $windowMaxSize;
+        margin: auto;
+
+    }
+}
