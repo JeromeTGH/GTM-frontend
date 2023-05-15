@@ -7,7 +7,7 @@ const pgConnexion = () => {
     return (
         <React.Fragment>
             <NoheaderComponent />
-            <LoginComponent />
+            <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
             <FooterComponent />
         </React.Fragment>
     );

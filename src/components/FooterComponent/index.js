@@ -13,7 +13,7 @@ const index = () => {
                     <div>
                         <p className="souligne">Liens rapides</p>
                         <p>→ Page d'accueil du site : <a href="/">Acceuil site GTM</a></p>
-                        <p>→ Lien projet, sur GitHub : <a href="https://github.com/JeromeTGH/GTM-css-design?gtmSrc=pgEnd"
+                        <p>→ Lien projet, sur GitHub : <a href="https://github.com/JeromeTGH/GTM-frontend?gtmSrc=pgEnd"
                                 target="_blank" rel="noreferrer">Voir
                                 projet sur GitHub</a>
                         </p>

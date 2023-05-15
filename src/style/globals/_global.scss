@@ -7,6 +7,7 @@
     outline: none;
     border: none;
     text-decoration: none;
+    cursor: default;
 }
 
 #root {
@@ -21,10 +22,29 @@ a {
     text-decoration: none;
     color: $couleurPrimaire;
     font-weight: bold;
+    cursor: pointer;
 
     &:hover {
         color: $couleurSecondaire;
     }
+}
+
+input[type=text], input[type=password] {
+    cursor: text;
+    border: 1px solid $couleurBordureInputText;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+
+    &:hover {
+        border: 1px solid $couleurPrimaire;
+    }
+
+}
+input[type=button], input[type=submit] {
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 2rem;
+    padding: 0.4rem;
 }
 
 button,
@@ -48,4 +68,14 @@ button,
 
 .souligne {
     text-decoration: underline;
+}
+
+.msgErreur {
+    color: red;
+    font-weight: bold;
+}
+
+.msgSuccess {
+    color: green;
+    font-weight: bold;
 }
