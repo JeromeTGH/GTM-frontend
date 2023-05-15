@@ -21,20 +21,16 @@ const ConnexionLoginComponent = () => {
             }
         })
         .then((res) => {
-            if(res.data.connexion === "reussie") {
-                console.log('Connexion réussie !');
-                window.location.replace('/');
+            if(res.data.email || res.data.password) {
+                baliseMsgErreurEmail.innerHTML = res.data.email;
+                baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
-                console.log('Échec de connexion ...');
+                console.log('Connexion réussie !');
+                window.location = '/';
             }
         })
-        .catch((error) => {
-            if(error.response.status === 500) {
-                baliseMsgErreurEmail.innerHTML = error.response.data.email;
-                baliseMsgErreurPassword.innerHTML = error.response.data.password;
-            } else {
-                console.log(error)
-            }
+        .catch((erreur) => {
+            console.log(erreur)
             //console.log('Erreur AXIOS, lors de la tentative de login')
         })
     }
@@ -43,7 +39,7 @@ const ConnexionLoginComponent = () => {
         <form action="" onSubmit={executeLogin} id="frmConnexion">
             <p>~ Connexion ~</p>
             <label htmlFor="emailLogin">Email : </label>
-            <input type="text" name="emailLogin" id="emailLogin" onChange={(e) => setEmail(e.target.value)} value={email} autocomplete="emailLogin" />
+            <input type="text" name="emailLogin" id="emailLogin" onChange={(e) => setEmail(e.target.value)} value={email} autoComplete="emailLogin" />
             <div className="msgErreur" id="erreurEmailDeConnexion"></div>
             <br />
             <label htmlFor="mdpLogin">Mot de passe : </label>

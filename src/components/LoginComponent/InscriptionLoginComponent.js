@@ -5,10 +5,10 @@ const InscriptionLoginComponent = () => {
         <form action="">
             <p>~ Inscription ~</p>
             <label htmlFor="pseudoInscription">Pseudo : </label>
-            <input type="text" name="pseudoInscription" id="pseudoInscription" />
+            <input type="text" name="pseudoInscription" id="pseudoInscription" autoComplete="pseudoIncription" />
             <br />
             <label htmlFor="emailInscription">Email : </label>
-            <input type="text" name="emailInscription" id="emailInscription" />
+            <input type="text" name="emailInscription" id="emailInscription" autoComplete="emailIncription" />
             <br />
             <label htmlFor="mdpInscription">Mot de passe : </label>
             <input type="text" name="mdpInscription" id="mdpInscription" />
