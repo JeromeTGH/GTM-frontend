@@ -33,6 +33,7 @@ const LoginComponent = (props) => {
                     </ul>
                     {fenetreDeConnexionAuPremierPlan && <ConnexionLoginComponent />}
                     {fenetreDeInscriptionAuPremierPlan && <InscriptionLoginComponent />}
+                    <p className="msgErreur alignCenter" id="msgErreurFrmConnexion"></p>
                 </div>
             )
             }

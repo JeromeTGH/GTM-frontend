@@ -10,6 +10,9 @@ const ConnexionLoginComponent = () => {
 
         const baliseMsgErreurEmail = document.getElementById('erreurEmailDeConnexion');
         const baliseMsgErreurPassword = document.getElementById('erreurPasswordDeConnexion');
+        const baliseMsgErreurFrmConnexion = document.getElementById('msgErreurFrmConnexion');
+
+        baliseMsgErreurFrmConnexion.innerHTML = '';
 
         axios({
             method: "post",
@@ -30,8 +33,8 @@ const ConnexionLoginComponent = () => {
             }
         })
         .catch((erreur) => {
+            baliseMsgErreurFrmConnexion.innerHTML = erreur;
             console.log(erreur)
-            //console.log('Erreur AXIOS, lors de la tentative de login')
         })
     }
 
