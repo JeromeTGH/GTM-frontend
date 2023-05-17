@@ -1,6 +1,6 @@
 import React from 'react';
 
-const pgPointageTachesAfaire = () => {
+const PagePointageTachesAfaire = () => {
     return (
         <div>
             Hello depuis page "pointage des tâches à faire"
@@ -8,4 +8,4 @@ const pgPointageTachesAfaire = () => {
     );
 };
 
-export default pgPointageTachesAfaire;
+export default PagePointageTachesAfaire;

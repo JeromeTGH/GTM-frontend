@@ -1,6 +1,6 @@
 import React from 'react';
 
-const pgProfil = () => {
+const PageProfil = () => {
     return (
         <div>
             Hello depuis page "profil"
@@ -8,4 +8,4 @@ const pgProfil = () => {
     );
 };
 
-export default pgProfil;
+export default PageProfil;

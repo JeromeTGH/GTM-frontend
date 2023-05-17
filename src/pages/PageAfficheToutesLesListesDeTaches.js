@@ -1,6 +1,6 @@
 import React from 'react';
 
-const pgAfficheToutesLesListesDeTaches = () => {
+const PageAfficheToutesLesListesDeTaches = () => {
     return (
         <div>
             Hello depuis page "toutes les listes de tâches à faire"
@@ -8,4 +8,4 @@ const pgAfficheToutesLesListesDeTaches = () => {
     );
 };
 
-export default pgAfficheToutesLesListesDeTaches;
+export default PageAfficheToutesLesListesDeTaches;

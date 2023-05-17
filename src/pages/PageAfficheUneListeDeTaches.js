@@ -1,6 +1,6 @@
 import React from 'react';
 
-const pgAfficheUneListeDeTaches = () => {
+const PageAfficheUneListeDeTaches = () => {
     return (
         <div>
             Hello depuis page "détail une liste de tâches"
@@ -8,4 +8,4 @@ const pgAfficheUneListeDeTaches = () => {
     );
 };
 
-export default pgAfficheUneListeDeTaches;
+export default PageAfficheUneListeDeTaches;
