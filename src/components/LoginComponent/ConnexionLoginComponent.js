@@ -33,7 +33,7 @@ const ConnexionLoginComponent = () => {
             }
         })
         .catch((erreur) => {
-            baliseMsgErreurFrmConnexion.innerHTML = erreur;
+            baliseMsgErreurFrmConnexion.innerHTML = '<br />' + erreur;
             console.log(erreur)
         })
     }
@@ -46,10 +46,11 @@ const ConnexionLoginComponent = () => {
             <div className="msgErreur" id="erreurEmailDeConnexion"></div>
             <br />
             <label htmlFor="mdpLogin">Mot de passe : </label>
-            <input type="password" name="mdpLogin" id="mdpLogin" onChange={(e) => setPassword(e.target.value)} value={password}  />
+            <input type="password" name="mdpLogin" id="mdpLogin" onChange={(e) => setPassword(e.target.value)} value={password} />
             <div className="msgErreur" id="erreurPasswordDeConnexion"></div>
             <br />
             <input type="submit" value="Se connecter" className="btn" id="btnLogin" />
+            <div className="msgErreur alignCenter" id="msgErreurFrmConnexion"></div>
         </form>
     );
 };

@@ -23,21 +23,20 @@ const LoginComponent = (props) => {
 
     return (
         <main>
-            {userID ? (
-                window.location = '/'
-            ) : (
-                <div className="loginblock">
-                    <ul className="loginblock-switch">
-                        <li id="seconnecter" onClick={changeDeFenetreLogin} className={fenetreDeConnexionAuPremierPlan ? "bouton-actif" : null}>Connexion</li>
-                        <li id="sinscrire" onClick={changeDeFenetreLogin} className={fenetreDeInscriptionAuPremierPlan ? "bouton-actif" : null}>Inscription</li>
-                    </ul>
-                    {fenetreDeConnexionAuPremierPlan && <ConnexionLoginComponent />}
-                    {fenetreDeInscriptionAuPremierPlan && <InscriptionLoginComponent />}
-                    <p className="msgErreur alignCenter" id="msgErreurFrmConnexion"></p>
-                </div>
-            )
-            }
-            
+            {
+                userID ? (
+                    window.location = '/'
+                ) : (
+                    <div className="loginblock">
+                        <ul className="loginblock-switch">
+                            <li id="seconnecter" onClick={changeDeFenetreLogin} className={fenetreDeConnexionAuPremierPlan ? "bouton-actif" : null}>Connexion</li>
+                            <li id="sinscrire" onClick={changeDeFenetreLogin} className={fenetreDeInscriptionAuPremierPlan ? "bouton-actif" : null}>Inscription</li>
+                        </ul>
+                        {fenetreDeConnexionAuPremierPlan && <ConnexionLoginComponent />}
+                        {fenetreDeInscriptionAuPremierPlan && <InscriptionLoginComponent />}
+                    </div>
+                )
+            }      
         </main>
     );
 };
