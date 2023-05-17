@@ -37,8 +37,30 @@ const InscriptionLoginComponent = () => {
                 baliseMsgErreurEmail.innerHTML = res.data.email;
                 baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
-                baliseMsgSuccessFrmInscription.innerHTML = '<br />Inscription réussie, veuillez vous connecter à présent !';
-                //window.location = '/';
+                baliseMsgSuccessFrmInscription.innerHTML = '<br />Inscription réussie, tentative de connexion automatique en cours...';
+
+                // Tentative de connexion immédiate, après inscription
+                axios({
+                    method: "post",
+                    url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/postLogin`,
+                    withCredentials: true,
+                    data: {
+                        email: email,
+                        password: password
+                    }
+                })
+                .then((res) => {
+                    if(res.data.email || res.data.password) {
+                        console.log(res)
+                    } else {
+                        console.log('Connexion réussie !');
+                        window.location = '/';
+                    }
+                })
+                .catch((erreur) => {
+                    baliseMsgErreurFrmInscription.innerHTML = '<br />' + erreur;
+                    console.log(erreur)
+                })
             }
         })
         .catch((erreur) => {
