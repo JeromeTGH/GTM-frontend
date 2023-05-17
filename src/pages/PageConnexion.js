@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import  { useNavigate }  from 'react-router-dom';
 import { UseridContext } from '../components/AppContext';
-import { useNavigate } from 'react-router-dom';
 
 import NoheaderComponent from '../components/NoheaderComponent'
 import LoginComponent from '../components/LoginComponent/LoginComponent';
@@ -11,17 +11,18 @@ const PageConnexion = () => {
     const userID = useContext(UseridContext);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if(userID) {
+            navigate('/');
+        }
+    }, [navigate, userID])
+
     return (
-        userID ? (
-            navigate('/')
-        ) :
-        (
-            <React.Fragment>
-                <NoheaderComponent />
-                <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
-                <FooterComponent />
-            </React.Fragment>
-        )
+        <React.Fragment>
+            <NoheaderComponent />
+            <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
+            <FooterComponent />
+        </React.Fragment>
     );
 };
 

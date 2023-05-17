@@ -1,6 +1,23 @@
 import React from 'react';
+import axios from 'axios';
 
-const index = () => {
+const HeaderComponent = () => {
+    
+    const seDeconnecter = () => {
+        axios({
+            method: "post",
+            url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/postLogout`,
+            withCredentials: true,
+            data: {}
+        })
+        .then((res) => {
+            window.location = '/';
+        })
+        .catch((erreur) => {
+            console.log(erreur)
+        })
+    }
+
     return (
         <header>
             <div className="header-container">
@@ -15,11 +32,11 @@ const index = () => {
                     </ul>
                 </nav>
                 <div className="header-container-btnLogInOut">
-                    <button id="btnLogInOut">Se&nbsp;déconnecter</button>
+                    <button id="btnLogInOut" onClick={seDeconnecter}>Se&nbsp;déconnecter</button>
                 </div>
             </div>
         </header>
     );
 };
 
-export default index;
+export default HeaderComponent;
