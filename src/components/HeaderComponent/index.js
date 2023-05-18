@@ -23,7 +23,7 @@ const HeaderComponent = () => {
         <header>
             <div className="header-container">
                 <div className="header-container-logo">
-                    <a href="/">Site&nbsp;GTM</a>
+                    <Link to="/">Site&nbsp;GTM</Link>
                 </div>
                 <nav className="header-container-navmenu">
                     <ul className="header-container-navmenu-ul">

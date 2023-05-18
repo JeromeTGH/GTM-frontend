@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { ajouterUtilisateur } from '../../store';
+import { useNavigate } from "react-router-dom";
 
 const ConnexionLoginComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const executeLogin = (e) => {
         e.preventDefault();
@@ -29,7 +35,10 @@ const ConnexionLoginComponent = () => {
                 baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
                 console.log('Connexion réussie !');
-                window.location = '/';
+
+                dispatch(ajouterUtilisateur({ id: res.data.idUtilisateur, pseudo: email}))
+
+                navigate('/');
             }
         })
         .catch((erreur) => {

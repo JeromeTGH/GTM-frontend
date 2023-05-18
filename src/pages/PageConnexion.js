@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
-import  { useNavigate }  from 'react-router-dom';
-import { UseridContext } from '../components/AppContext';
+import React from 'react';
+// import React, { useContext, useEffect } from 'react';
+// import  { useNavigate }  from 'react-router-dom';
+// import { UseridContext } from '../components/AppContext';
 
 // import NoheaderComponent from '../components/NoheaderComponent'
 import LoginComponent from '../components/LoginComponent/LoginComponent';
@@ -8,14 +9,14 @@ import LoginComponent from '../components/LoginComponent/LoginComponent';
 
 const PageConnexion = () => {
 
-    const userID = useContext(UseridContext);
-    const navigate = useNavigate();
+    // const userID = useContext(UseridContext);
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        if(userID) {
-            navigate('/');
-        }
-    }, [navigate, userID])
+    // useEffect(() => {
+    //     if(userID) {
+    //         navigate('/');
+    //     }
+    // }, [navigate, userID])
 
     return (
         <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
