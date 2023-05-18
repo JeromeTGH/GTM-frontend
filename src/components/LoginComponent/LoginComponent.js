@@ -19,16 +19,14 @@ const LoginComponent = (props) => {
     }
 
     return (
-        <main>
-            <div className="loginblock">
-                <ul className="loginblock-switch">
-                    <li id="seconnecter" onClick={changeDeFenetreLogin} className={fenetreDeConnexionAuPremierPlan ? "bouton-actif" : null}>Connexion</li>
-                    <li id="sinscrire" onClick={changeDeFenetreLogin} className={fenetreDeInscriptionAuPremierPlan ? "bouton-actif" : null}>Inscription</li>
-                </ul>
-                {fenetreDeConnexionAuPremierPlan && <ConnexionLoginComponent />}
-                {fenetreDeInscriptionAuPremierPlan && <InscriptionLoginComponent />}
-            </div>
-        </main>
+        <div className="loginblock">
+            <ul className="loginblock-switch">
+                <li id="seconnecter" onClick={changeDeFenetreLogin} className={fenetreDeConnexionAuPremierPlan ? "bouton-actif" : null}>Connexion</li>
+                <li id="sinscrire" onClick={changeDeFenetreLogin} className={fenetreDeInscriptionAuPremierPlan ? "bouton-actif" : null}>Inscription</li>
+            </ul>
+            {fenetreDeConnexionAuPremierPlan && <ConnexionLoginComponent />}
+            {fenetreDeInscriptionAuPremierPlan && <InscriptionLoginComponent />}
+        </div>
     );
 };
 

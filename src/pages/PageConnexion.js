@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import  { useNavigate }  from 'react-router-dom';
 import { UseridContext } from '../components/AppContext';
 
-import NoheaderComponent from '../components/NoheaderComponent'
+// import NoheaderComponent from '../components/NoheaderComponent'
 import LoginComponent from '../components/LoginComponent/LoginComponent';
-import FooterComponent from '../components/FooterComponent';
+// import FooterComponent from '../components/FooterComponent';
 
 const PageConnexion = () => {
 
@@ -18,11 +18,7 @@ const PageConnexion = () => {
     }, [navigate, userID])
 
     return (
-        <React.Fragment>
-            <NoheaderComponent />
-            <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
-            <FooterComponent />
-        </React.Fragment>
+        <LoginComponent fenetreConnexionActive={true} fenetreInscriptionActive={false} />
     );
 };
 

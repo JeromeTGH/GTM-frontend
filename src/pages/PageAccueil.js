@@ -2,10 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import  { useNavigate }  from 'react-router-dom';
 import { UseridContext } from '../components/AppContext';
 
-import HeaderComponent from '../components/HeaderComponent';
-import MainComponent from '../components/MainComponent';
-import FooterComponent from '../components/FooterComponent';
-
 const PageAccueil = () => {
 
     const userID = useContext(UseridContext);
@@ -18,11 +14,11 @@ const PageAccueil = () => {
     }, [navigate, userID])
 
     return (
-        <React.Fragment>
-            <HeaderComponent />
-            <MainComponent />
-            <FooterComponent />
-        </React.Fragment>
+        <div className="main-container">
+            <p>(contenu à venir)<br /><br /><br /><br /><br />(contenu à venir)</p>
+            <p>(contenu à venir)<br /><br /><br /><br /><br />(contenu à venir)</p>
+            <p>(contenu à venir)<br /><br /><br /><br /><br />(contenu à venir)</p>
+        </div>  
     );
 };
 

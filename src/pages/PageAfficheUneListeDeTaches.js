@@ -2,7 +2,7 @@ import React from 'react';
 
 const PageAfficheUneListeDeTaches = () => {
     return (
-        <div>
+        <div className="main-container">
             Hello depuis page "détail une liste de tâches"
         </div>
     );

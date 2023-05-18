@@ -1,25 +1,27 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 
-import PageAccueil from '../../pages/PageAccueil';
-import PageProfil from '../../pages/PageProfil';
-import PageAfficheToutesLesListesDeTaches from '../../pages/PageAfficheToutesLesListesDeTaches';
-import PageAfficheUneListeDeTaches from '../../pages/PageAfficheUneListeDeTaches';
-import PageConnexion from '../../pages/PageConnexion';
-import PagePointageTachesAfaire from '../../pages/PagePointageTachesAfaire';
-import Page404 from '../../pages/Page404';
+import PageBuilder from '../PageBuilder';
 
 const index = () => {
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" exact element={<PageAccueil />} />
-                <Route path="/profil" exact element={<PageProfil />} />
-                <Route path="/afficheToutesLesListesDeTaches" exact element={<PageAfficheToutesLesListesDeTaches />} />
-                <Route path="/afficheUneListeDeTaches" exact element={<PageAfficheUneListeDeTaches />} />
-                <Route path="/connexion" exact element={<PageConnexion />} />
-                <Route path="/pointageTachesAfaire" exact element={<PagePointageTachesAfaire />} />
-                <Route path="/404" exact element={<Page404 />} />
+                <Route path="/" exact element={
+                    <PageBuilder withHeader="yes" targetPage="/" />} />
+                <Route path="/profil" exact element={
+                    <PageBuilder withHeader="yes" targetPage="/profil" />} />
+                <Route path="/afficheToutesLesListesDeTaches" exact element={
+                    <PageBuilder withHeader="yes" targetPage="/afficheToutesLesListesDeTaches" />} />
+                <Route path="/afficheUneListeDeTaches" exact element=
+                    {<PageBuilder withHeader="yes" targetPage="/afficheUneListeDeTaches" />} />
+                <Route path="/connexion" exact element={
+                    <PageBuilder withHeader="no" targetPage="/connexion" />} />
+                <Route path="/pointageTachesAfaire" exact element={
+                    <PageBuilder withHeader="yes" targetPage="/pointageTachesAfaire" />} />
+                <Route path="/404" exact element={
+                    <PageBuilder withHeader="yes" targetPage="/404" />} />
                 <Route path="*" element={<Navigate replace to="/404" />} />
             </Routes>
         </BrowserRouter>

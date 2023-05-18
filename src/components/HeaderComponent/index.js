@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const HeaderComponent = () => {
     
@@ -26,9 +27,9 @@ const HeaderComponent = () => {
                 </div>
                 <nav className="header-container-navmenu">
                     <ul className="header-container-navmenu-ul">
-                        <li><a href="/">Accueil</a></li>
-                        <li><a href="/AfficheToutesLesListesDeTaches">Voir toutes les listes de tâches à faire</a></li>
-                        <li><a href="/Profil">Voir profil</a></li>
+                        <li><Link to="/">Accueil</Link></li>
+                        <li><Link to="/afficheToutesLesListesDeTaches">Voir toutes les listes de tâches à faire</Link></li>
+                        <li><Link to="/profil">Voir profil</Link></li>
                     </ul>
                 </nav>
                 <div className="header-container-btnLogInOut">

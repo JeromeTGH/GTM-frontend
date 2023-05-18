@@ -2,7 +2,7 @@ import React from 'react';
 
 const PagePointageTachesAfaire = () => {
     return (
-        <div>
+        <div className="main-container">
             Hello depuis page "pointage des tâches à faire"
         </div>
     );

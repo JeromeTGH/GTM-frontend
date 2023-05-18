@@ -1,11 +1,11 @@
 main {
     display: flex;
+    justify-content: center;
 
     .main-container {
         padding: 1rem;
-        // border: 1px solid $couleurDeBordure;
+        //border: 1px solid $couleurDeBordure;
         max-width: $windowMaxSize;
-        margin: auto;
-
+        width: 100%;
     }
 }
