@@ -5,8 +5,7 @@ const userSlice = createSlice({
     initialState: [],
     reducers: {
         ajouterUtilisateur: (state, action) => {
-            // anciennement { type: "ADD_USER", payload: "tata" }
-            // { type: user/ajouterUtilisateur, payload: "tata" }
+            // { type: user/ajouterUtilisateur, payload: id, pseudo }
             //      ==> en fait, le nom du type sera égal au nom du slice, slash, le nom de la fonction à exécuter
             const nouvelUtilisateur = {
                 id: action.payload.id,
@@ -15,12 +14,10 @@ const userSlice = createSlice({
             state.push(nouvelUtilisateur);
         },
         // modifierUtilisateur: (state, action) => {
-        //     // anciennement { type: "MODIFY_USER", payload: 30 "tutu" }
         //     const utilisateur = state.find(util => util.id === action.payload.id);
         //     utilisateur.nom = action.payload.nom;
         // },
         // supprimerUtilisateur: (state, action) => {
-        //     // anciennement { type: "DELETE_USER", payload: 12 }
         //     state = state.filter(utilisateur => utilisateur.id !== action.payload);
         // }
     }

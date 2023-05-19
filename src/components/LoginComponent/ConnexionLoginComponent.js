@@ -35,9 +35,8 @@ const ConnexionLoginComponent = () => {
                 baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
                 console.log('Connexion réussie !');
-
-                dispatch(ajouterUtilisateur({ id: res.data.idUtilisateur, pseudo: email}))
-
+                console.log('res.data', res.data);
+                dispatch(ajouterUtilisateur({ id: res.data.idUtilisateur, pseudo: res.data.pseudo}));
                 navigate('/');
             }
         })
