@@ -1,10 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { effacerInfosUtilisateur } from '../../redux/store';
+import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = () => {
     
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const seDeconnecter = () => {
+
         axios({
             method: "post",
             url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/postLogout`,
@@ -12,7 +19,8 @@ const HeaderComponent = () => {
             data: {}
         })
         .then((res) => {
-            window.location = '/';
+            dispatch(effacerInfosUtilisateur());
+            navigate('/');
         })
         .catch((erreur) => {
             console.log(erreur)

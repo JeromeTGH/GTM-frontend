@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { ajouterUtilisateur } from '../../store';
+import { enregistrerInfosUtilisateur } from '../../redux/store';
 import { useNavigate } from "react-router-dom";
 
 const ConnexionLoginComponent = () => {
@@ -34,9 +34,7 @@ const ConnexionLoginComponent = () => {
                 baliseMsgErreurEmail.innerHTML = res.data.email;
                 baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
-                console.log('Connexion réussie !');
-                console.log('res.data', res.data);
-                dispatch(ajouterUtilisateur({ id: res.data.idUtilisateur, pseudo: res.data.pseudo}));
+                dispatch(enregistrerInfosUtilisateur({ id: res.data.idUtilisateur, pseudo: res.data.pseudo}));
                 navigate('/');
             }
         })
