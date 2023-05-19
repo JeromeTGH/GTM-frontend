@@ -8,7 +8,7 @@ import PageAccueil from '../../pages/PageAccueil';
 import PageProfil from '../../pages/PageProfil';
 import PageAfficheToutesLesListesDeTaches from '../../pages/PageAfficheToutesLesListesDeTaches';
 import PageAfficheUneListeDeTaches from '../../pages/PageAfficheUneListeDeTaches';
-import PageConnexion from '../../pages/PageConnexion';
+// import PageConnexion from '../../pages/PageConnexion';
 import PagePointageTachesAfaire from '../../pages/PagePointageTachesAfaire';
 import Page404 from '../../pages/Page404';
 
@@ -27,8 +27,8 @@ const PageBuilder = (props) => {
                 return <PageAfficheToutesLesListesDeTaches />;
             case '/afficheUneListeDeTaches':
                 return <PageAfficheUneListeDeTaches />;    
-            case '/connexion':
-                return <PageConnexion />;
+            // case '/connexion':
+                // return <PageConnexion />;
             case '/pointageTachesAfaire':
                 return <PagePointageTachesAfaire />;
             case '/404':

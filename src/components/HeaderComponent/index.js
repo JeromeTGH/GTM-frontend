@@ -3,12 +3,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { effacerInfosUtilisateur } from '../../redux/user.slice';
-// import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = () => {
     
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
 
     const seDeconnecter = () => {
 
@@ -19,8 +17,7 @@ const HeaderComponent = () => {
             data: {}
         })
         .then((res) => {
-            dispatch(effacerInfosUtilisateur());            // Pas très utile, du fait que "window.location" va "réinitialiser" le store
-            //navigate('/');
+            dispatch(effacerInfosUtilisateur());            // Pas très utile, vu que "window.location" va "réinitialiser" le store
             window.location = '/';
         })
         .catch((erreur) => {

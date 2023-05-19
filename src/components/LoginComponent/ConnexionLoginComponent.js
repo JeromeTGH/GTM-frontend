@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { enregistrerInfosUtilisateur } from '../../redux/user.slice';
-import { useNavigate } from "react-router-dom";
 
 const ConnexionLoginComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const executeLogin = (e) => {
         e.preventDefault();
@@ -34,8 +28,7 @@ const ConnexionLoginComponent = () => {
                 baliseMsgErreurEmail.innerHTML = res.data.email;
                 baliseMsgErreurPassword.innerHTML = res.data.password;
             } else {
-                dispatch(enregistrerInfosUtilisateur({ id: res.data.idUtilisateur, pseudo: res.data.pseudo}));
-                navigate('/');
+                window.location = '/';      // Pas de useNavigate ici, pour bien charger "l'environnement connecté"
             }
         })
         .catch((erreur) => {

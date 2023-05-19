@@ -1,54 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppRoutes from './components/AppRoutes';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { enregistrerInfosUtilisateur } from './redux/user.slice';
+
+import axios from 'axios';
+
+import NoheaderComponent from './components/NoheaderComponent';
+import PageConnexion from './pages/PageConnexion';
 
 const App = () => {
+ 
+  const dispatch = useDispatch();
+  
+  const [isLoading, setisLoading] = useState(true);
+  const [isConnected, setisConnected] = useState(false);
 
-  // const utilisateur = useSelector((donnees) => donnees.user[0]);
-
-  // useEffect(() => {
-  //   console.log('Render App.js')
-
-  // }, [])
-
-
-  const checkCookieAndStartRouting = () => {
-
-    // Interrogation de l'API (lecture du cookie, et retourne 0 ou l'ID de l'utilisateur)
-
-
-    // Si 0 a été retourné, alors redirection vers la page connexion si on n'est pas dessus, sinon lancer AppRoute
-
-
-    // Si ID retourné, alors lancement de AppRoute directement
-
-
-    return <div>Ici3</div>
-    // console.log('verifCookiePuisIdEventuel');
-    //   console.log('Cookie présent ?', Cookies.get('cookieJetonJWT'));
-    //   if(Cookies.get('cookieJetonJWT')) {
-    //     console.log("Cookie 'cookieJetonJWT' présent !");
-    //     return <AppRoutes />            
-    //   } else {
-    //     console.log("Cookie 'cookieJetonJWT' absent ...");
-    //     if(window.location.pathname === '/connexion')
-    //       return <AppRoutes />
-    //     else
-    //       //window.location = '/connexion'
-    //       return <div>Ici2</div>
-    //   }
+  const interrogeAPI = () => {
+    axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/getUserIdSiCookieJwtConforme`, { withCredentials: true })
+    .then ((res) => {
+      // console.log("res.data", res.data);
+      dispatch(enregistrerInfosUtilisateur({ id: res.data, pseudo: ''}));
+      if(res.data === 0) {
+        setisConnected(false);
+        if(window.location.pathname !== '/connexion') {
+          window.location = '/connexion'
+        } else {
+          setisLoading(false);
+        }
+      } else {
+        setisConnected(true);
+        setisLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log("err", err)
+    })
   }
+  
+  useEffect(() => {
+    interrogeAPI();
+  }, []);
 
   return (
-    <React.Fragment>
-      {checkCookieAndStartRouting()}
-    </React.Fragment>
-  );
-};
+    <>
+    {
+      isLoading ?
+        (<div>Chargement de la page ...</div>) :
+        (isConnected ?
+            (<AppRoutes />) :
+            (<><NoheaderComponent /><PageConnexion /><div></div></>)
+        )
+    }
+    </>
+  )
+}
 
-//   <p>{console.log('Initialisation')}</p>
-//   ) : (
-//   <p>{console.log('intérieur App.js')}</p>
-//     <AppRoutes />
-// )}
 export default App;
