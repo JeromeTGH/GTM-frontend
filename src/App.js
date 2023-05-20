@@ -15,31 +15,33 @@ const App = () => {
   const [isLoading, setisLoading] = useState(true);
   const [isConnected, setisConnected] = useState(false);
 
-  const interrogeAPI = () => {
-    axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/getUserIdSiCookieJwtConforme`, { withCredentials: true })
-    .then ((res) => {
-      // console.log("res.data", res.data);
-      dispatch(enregistrerInfosUtilisateur({ id: res.data, pseudo: ''}));
-      if(res.data === 0) {
-        setisConnected(false);
-        if(window.location.pathname !== '/connexion') {
-          window.location = '/connexion'
-        } else {
-          setisLoading(false);
-        }
-      } else {
-        setisConnected(true);
-        setisLoading(false);
-      }
-    })
-    .catch((err) => {
-      console.log("err", err)
-    })
-  }
   
   useEffect(() => {
+
+    const interrogeAPI = () => {
+      axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/getUserIdSiCookieJwtConforme`, { withCredentials: true })
+      .then ((res) => {
+        // console.log("res.data", res.data);
+        dispatch(enregistrerInfosUtilisateur({ id: res.data, pseudo: ''}));
+        if(res.data === 0) {
+          setisConnected(false);
+          if(window.location.pathname !== '/connexion') {
+            window.location = '/connexion'
+          } else {
+            setisLoading(false);
+          }
+        } else {
+          setisConnected(true);
+          setisLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err)
+      })
+    }
+
     interrogeAPI();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
