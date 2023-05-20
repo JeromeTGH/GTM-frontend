@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { effacerInfosUtilisateur } from '../../redux/user.slice';
+// import { useDispatch } from 'react-redux';
+// import { effacerInfosUtilisateur } from '../../redux/user.slice';
 
 const HeaderComponent = () => {
     
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const seDeconnecter = () => {
 
@@ -17,7 +17,7 @@ const HeaderComponent = () => {
             data: {}
         })
         .then((res) => {
-            dispatch(effacerInfosUtilisateur());            // Pas très utile, vu que "window.location" va "réinitialiser" le store
+            // dispatch(effacerInfosUtilisateur());            // Pas très utile, vu que "window.location" va "réinitialiser" le store
             window.location = '/';
         })
         .catch((erreur) => {

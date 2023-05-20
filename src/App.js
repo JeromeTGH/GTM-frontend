@@ -21,18 +21,34 @@ const App = () => {
     const interrogeAPI = () => {
       axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/getUserIdSiCookieJwtConforme`, { withCredentials: true })
       .then ((res) => {
-        // console.log("res.data", res.data);
-        dispatch(enregistrerInfosUtilisateur({ id: res.data, pseudo: ''}));
         if(res.data === 0) {
+          // Aucun utilisateur connecté, si on passe ici
           setisConnected(false);
           if(window.location.pathname !== '/connexion') {
-            window.location = '/connexion'
+            window.location = '/connexion'                      // On va sur la page /connexion, pour se connecter
           } else {
-            setisLoading(false);
+            setisLoading(false);                                // On est déjà sur la page /connexion, on y reste, pour se connecter
           }
         } else {
-          setisConnected(true);
-          setisLoading(false);
+          // Il y a un utilisateur connecté, si on passe ici
+          axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/getOne/${res.data}`, { withCredentials: true })
+          .then ((res) => {
+            // On récupère les infos utlisateur, et on les place dans le store
+            dispatch(enregistrerInfosUtilisateur({
+              id: res.data._id,
+              pseudo: res.data.pseudo,
+              email: res.data.email,
+              estActif: res.data.estActif,
+              tachespossibles: res.data.tachespossibles,
+              createdAt: res.data.createdAt,
+              updatedAt: res.data.updatedAt
+            }));
+            setisConnected(true);
+            setisLoading(false);
+          })
+          .catch((err) => {
+            console.log("err", err)
+          })
         }
       })
       .catch((err) => {
