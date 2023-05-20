@@ -1,16 +1,16 @@
 import React from 'react';
 
-import NoheaderComponent from '../NoheaderComponent';
-import HeaderComponent from '../HeaderComponent';
-import FooterComponent from '../FooterComponent';
+import NoheaderComponent from './NoheaderComponent';
+import HeaderComponent from './HeaderComponent';
+import FooterComponent from './FooterComponent';
 
-import PageAccueil from '../../pages/PageAccueil';
-import PageProfil from '../../pages/PageProfil';
-import PageAfficheToutesLesListesDeTaches from '../../pages/PageAfficheToutesLesListesDeTaches';
-import PageAfficheUneListeDeTaches from '../../pages/PageAfficheUneListeDeTaches';
+import PageAccueil from '../pages/PageAccueil';
+import PageProfil from '../pages/PageProfil';
+import PageAfficheToutesLesListesDeTaches from '../pages/PageAfficheToutesLesListesDeTaches';
+import PageAfficheUneListeDeTaches from '../pages/PageAfficheUneListeDeTaches';
 // import PageConnexion from '../../pages/PageConnexion';
-import PagePointageTachesAfaire from '../../pages/PagePointageTachesAfaire';
-import Page404 from '../../pages/Page404';
+import PagePointageTachesAfaire from '../pages/PagePointageTachesAfaire';
+import Page404 from '../pages/Page404';
 
 const PageBuilder = (props) => {
 
