@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const userSlice = createSlice({
     name: "user",
     // initialState: [{
@@ -25,16 +24,6 @@ export const userSlice = createSlice({
             // utilisateur.updatedAt = action.payload.updatedAt;
             state[0] = action.payload
         },
-        // effacerInfosUtilisateur: (state, action) => {
-            // const utilisateur = state[0];
-            // utilisateur._id = '0';
-            // utilisateur.pseudo = '';
-            // utilisateur.email = '';
-            // utilisateur.estActif = '';
-            // utilisateur.tachespossibles = '';
-            // utilisateur.createdAt = '';
-            // utilisateur.updatedAt = '';
-        // }
         // ajouterUtilisateur: (state, action) => {
         //     const nouvelUtilisateur = {
         //         id: action.payload.id,

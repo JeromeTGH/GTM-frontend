@@ -11,6 +11,7 @@ const PageProfil = () => {
     const [userCreatedAt, setUserCreatedAt] = useState(valeur_initiale_chargement);
     const [userEmail, setUserEmail] = useState(valeur_initiale_chargement);
     const [userEstActif, setUserEstActif] = useState(valeur_initiale_chargement);
+    const [userTachesPossiblesDeFaire, setUserTachesPossiblesDeFaire] = useState([]);
 
     const [pseudoEditable, setPseudoEditable] = useState(false);        // Par défaut, au lancement de cette page, le pseudo n'est pas "éditable"
     const [nouveauPseudo, setNouveauPseudo] = useState('');             // ou plus exactement, il faut cliquer dessus ou sur le btn, pour le modifier
@@ -86,6 +87,7 @@ const PageProfil = () => {
                 baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + res.data.erreur;
             } else {
                 // Il faudra stocker cela dans le store, et rafraîchir l'affichage (react)
+                dispatch(enregistrerInfosUtilisateur(res.data));
             }
         })
         .catch((erreur) => {
@@ -100,6 +102,7 @@ const PageProfil = () => {
         setUserCreatedAt(dateParser(utilisateur.createdAt));
         setUserEmail(utilisateur.email);
         setUserEstActif(utilisateur.estActif);
+        setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
     }, [utilisateur])
 
     return (
@@ -137,16 +140,23 @@ const PageProfil = () => {
                 <div className="main-container-profil-right">
                     <p className="main-container-profil-right-title">Tâches à faire chaque mois</p>
                     <ul>
-                        <li className="main-container-profil-right-tachesAfaire">
-                            <p className="main-container-profil-right-tachesAfaire-title">Titre de la tâche à faire</p>
-                            <p className="main-container-profil-right-tachesAfaire-description">Description de la tâche à
-                                faire</p>
-                            <p className="main-container-profil-right-tachesAfaire-btns">
-                                <button>Éditer</button>
-                                <span>&nbsp;&nbsp;</span>
-                                <button>Supprimer</button>
-                            </p>
-                        </li>
+                        {userTachesPossiblesDeFaire.length > 0 && userTachesPossiblesDeFaire.map((tache) => {
+                            return <li className="main-container-profil-right-tachesAfaire">
+                                <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
+                                <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
+                                <p className="main-container-profil-right-tachesAfaire-btns">
+                                    <button>Éditer</button>
+                                    <span>&nbsp;&nbsp;</span>
+                                    <button>Supprimer</button>
+                                </p>
+                            </li>
+                        })}
+                        {userTachesPossiblesDeFaire.length === 0 && (
+                            <li className="main-container-profil-right-tachesAfaire">
+                                <p><br />==&gt; AUCUNE TÂCHE ENREGISTRÉE, POUR L'INSTANT<br /><br /></p>
+                            </li>
+                        )}
+
                         <li className="main-container-profil-right-tachesAfaire">
                             <form action="" onSubmit={ajouteNouvelleTache} id="frmAddTask">
                                 <p className="main-container-profil-right-tachesAfaire-title">Ajouter une nouvelle tâche</p>
