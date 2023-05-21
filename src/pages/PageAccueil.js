@@ -7,7 +7,7 @@ const PageAccueil = () => {
 
     return (
         <div className="main-container">
-            <p>ID utilisateur : {utilisateur.id}</p>
+            <p>ID utilisateur : {utilisateur._id}</p>
             <p>Pseudo : {utilisateur.pseudo}</p>
         </div>  
     );

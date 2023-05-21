@@ -12,6 +12,9 @@ const PageProfil = () => {
     const [userEmail, setUserEmail] = useState(valeur_initiale_chargement);
     const [userEstActif, setUserEstActif] = useState(valeur_initiale_chargement);
 
+    const [pseudoEditable, setPseudoEditable] = useState(false);        // Par défaut, au lancement de cette page, le pseudo n'est pas "éditable"
+    const [nouveauPseudo, setNouveauPseudo] = useState('');             // ou plus exactement, il faut cliquer dessus ou sur le btn, pour le modifier
+
     const utilisateur = useSelector((donnees) => donnees.user[0]);
     const dispatch = useDispatch();
 
@@ -23,23 +26,30 @@ const PageProfil = () => {
             .then ((res) => {
                 dispatch(enregistrerInfosUtilisateur(res.data))
                 setUserEstActif(!userEstActif)
-                // On récupère les infos utlisateur, et on les place dans le store
-                // dispatch(enregistrerInfosUtilisateur({
-                //   id: res.data._id,
-                //   pseudo: res.data.pseudo,
-                //   email: res.data.email,
-                //   estActif: res.data.estActif,
-                //   tachespossibles: res.data.tachespossibles,
-                //   createdAt: res.data.createdAt,
-                //   updatedAt: res.data.updatedAt
-                // }));
-              })
-              .catch((err) => {
+            })
+            .catch((err) => {
                 console.log("err", err)
-              })
+            })
         }
     }
 
+    const enregistreNouveauPseudo = () => {
+        // Appel axios (enregistrement nouveau pseudo)
+        axios.put(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/updateOne/${utilisateur._id}`, {pseudo: nouveauPseudo}, { withCredentials: true })
+        .then ((res) => {
+            dispatch(enregistrerInfosUtilisateur(res.data));
+            setPseudoEditable(false);
+        })
+        .catch((err) => {
+            console.log("err", err)
+        })
+    }
+
+    const checkToucheAppuyeeChampPseudo = (e) => {
+        if(e.keyCode === 13) {
+            enregistreNouveauPseudo();
+        }
+    }
 
     useEffect(() => {
         setUserPseudo(utilisateur.pseudo);
@@ -52,11 +62,27 @@ const PageProfil = () => {
         <div className="main-container">
             <div className="main-container-profil">
                 <div className="main-container-profil-left">
-                    <p className="main-container-profil-left-title">Bonjour {userPseudo} !</p>
+                    <p className="main-container-profil-left-title">Profil de {userPseudo}</p>
                     <p className="main-container-profil-left-creationdate">Profil créé le {userCreatedAt}</p>
                     <p className="main-container-profil-left-label">→ Pseudo (cliquer dessus, pour modifier): </p>
-                    <p className="main-container-profil-left-texte">{userPseudo}</p>
-                    <p className="main-container-profil-left-btn"><button>Modifier pseudo</button></p>
+                    {pseudoEditable === false && (
+                        <>
+                            <p className="main-container-profil-left-texte" onClick={() => setPseudoEditable(true)}>{userPseudo}</p>
+                            <p className="main-container-profil-left-btn">
+                                <button onClick={() => setPseudoEditable(true)}>Modifier pseudo</button>
+                            </p>
+                        </>
+                    )}
+                    {pseudoEditable === true && (
+                        <>
+                            <input type="text" className="main-container-profil-left-input" defaultValue={userPseudo} onChange={(e) => setNouveauPseudo(e.target.value)}  onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
+                            <p className="main-container-profil-left-btn">
+                                <button onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
+                                <span>&nbsp;&nbsp;</span>
+                                <button onClick={() => enregistreNouveauPseudo()}>Enregistrer modifications pseudo</button>
+                            </p>
+                        </>
+                    )}
                     <p className="main-container-profil-left-label">→ Email de correspondance (non modifiable): </p>
                     <p className="main-container-profil-left-texte">{userEmail}</p>
                     <p className="main-container-profil-left-label">→ Envoi d'emails automatiques ? (chaque 1er du mois)</p>
@@ -71,7 +97,8 @@ const PageProfil = () => {
                             <p className="main-container-profil-right-tachesAfaire-description">Description de la tâche à
                                 faire</p>
                             <p className="main-container-profil-right-tachesAfaire-btns">
-                                <button>Éditer</button>&nbsp;
+                                <button>Éditer</button>
+                                <span>&nbsp;&nbsp;</span>
                                 <button>Supprimer</button>
                             </p>
                         </li>
