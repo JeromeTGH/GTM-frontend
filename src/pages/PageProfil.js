@@ -37,12 +37,23 @@ const PageProfil = () => {
         // Appel axios (enregistrement nouveau pseudo)
         axios.put(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/updateOne/${utilisateur._id}`, {pseudo: nouveauPseudo}, { withCredentials: true })
         .then ((res) => {
-            dispatch(enregistrerInfosUtilisateur(res.data));
-            setPseudoEditable(false);
+            if(!res.data.errors) {
+                dispatch(enregistrerInfosUtilisateur(res.data));
+                setPseudoEditable(false);
+            } else {
+                console.log("res.data.errors", res.data.errors)
+                document.getElementById('msgErreurModificationPseudo').innerHTML = res.data.errors.pseudo.message;
+            }
         })
         .catch((err) => {
             console.log("err", err)
+            document.getElementById('msgErreurModificationPseudo').innerHTML = err;
         })
+    }
+
+    const rendPseudoEditable = () => {
+        setNouveauPseudo(userPseudo);
+        setPseudoEditable(true);
     }
 
     const checkToucheAppuyeeChampPseudo = (e) => {
@@ -67,15 +78,16 @@ const PageProfil = () => {
                     <p className="main-container-profil-left-label">→ Pseudo (cliquer dessus, pour modifier): </p>
                     {pseudoEditable === false && (
                         <>
-                            <p className="main-container-profil-left-texte" onClick={() => setPseudoEditable(true)}>{userPseudo}</p>
+                            <p className="main-container-profil-left-texte" onClick={() => rendPseudoEditable()}>{userPseudo}</p>
                             <p className="main-container-profil-left-btn">
-                                <button onClick={() => setPseudoEditable(true)}>Modifier pseudo</button>
+                                <button onClick={() => rendPseudoEditable()}>Modifier pseudo</button>
                             </p>
                         </>
                     )}
                     {pseudoEditable === true && (
                         <>
-                            <input type="text" className="main-container-profil-left-input" defaultValue={userPseudo} onChange={(e) => setNouveauPseudo(e.target.value)}  onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
+                            <input type="text" className="main-container-profil-left-input" value={nouveauPseudo} onChange={(e) => setNouveauPseudo(e.target.value)} onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
+                            <div className="msgErreur" id="msgErreurModificationPseudo"></div>
                             <p className="main-container-profil-left-btn">
                                 <button onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
                                 <span>&nbsp;&nbsp;</span>
