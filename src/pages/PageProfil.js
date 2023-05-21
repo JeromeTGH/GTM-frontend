@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { dateParser } from '../utils';
 
 const PageProfil = () => {
 
+    const valeur_initiale_chargement = '(en cours de chargement...)';
+    const [userPseudo, setUserPseudo] = useState(valeur_initiale_chargement);
+    const [userCreatedAt, setUserCreatedAt] = useState(valeur_initiale_chargement);
+    const [userEmail, setUserEmail] = useState(valeur_initiale_chargement);
+    const [userEstActif, setUserEstActif] = useState(valeur_initiale_chargement);
+
     const utilisateur = useSelector((donnees) => donnees.user[0]);
+
+    useEffect(() => {
+        setUserPseudo(utilisateur.pseudo);
+        setUserCreatedAt(dateParser(utilisateur.createdAt));
+        setUserEmail(utilisateur.email);
+        setUserEstActif(utilisateur.email);
+    }, [utilisateur])
 
     return (
         <div className="main-container">
             <div className="main-container-profil">
                 <div className="main-container-profil-left">
-                    <p className="main-container-profil-left-title">Bonjour {utilisateur.pseudo} !</p>
-                    <p className="main-container-profil-left-creationdate">Profil créé le {dateParser(utilisateur.createdAt)}</p>
+                    <p className="main-container-profil-left-title">Bonjour {userPseudo} !</p>
+                    <p className="main-container-profil-left-creationdate">Profil créé le {userCreatedAt}</p>
                     <p className="main-container-profil-left-label">→ Pseudo (cliquer dessus, pour modifier): </p>
-                    <p className="main-container-profil-left-texte">{utilisateur.pseudo}</p>
+                    <p className="main-container-profil-left-texte">{userPseudo}</p>
                     <p className="main-container-profil-left-btn"><button>Modifier pseudo</button></p>
                     <p className="main-container-profil-left-label">→ Email de correspondance (non modifiable): </p>
-                    <p className="main-container-profil-left-texte">{utilisateur.email}</p>
+                    <p className="main-container-profil-left-texte">{userEmail}</p>
                     <p className="main-container-profil-left-label">→ Envoi d'email mensuel autorisé ?</p>
-                    <p className="main-container-profil-left-texte">{utilisateur.estActif ? 'oui' : 'non'}</p>
-                    <p className="main-container-profil-left-btn"><button>{utilisateur.estActif ? 'Désactiver l\'envoi d\'emails automatiques' : 'Activer l\'envoi d\'emails automatiques'}</button></p>
+                    <p className="main-container-profil-left-texte">{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'oui' : 'non')}</p>
+                    <p className="main-container-profil-left-btn"><button>{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'Désactiver l\'envoi d\'emails automatiques' : 'Activer l\'envoi d\'emails automatiques')}</button></p>
                 </div>
                 <div className="main-container-profil-right">
                     <p className="main-container-profil-right-title">Tâches à faire chaque mois</p>
