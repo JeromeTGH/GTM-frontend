@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: "user",
     // initialState: [{
-    //     id: '',
+    //     _id: '',
     //     pseudo: '',
     //     email: '',
     //     estActif: false,
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
     reducers: {
         enregistrerInfosUtilisateur: (state, action) => {
             // const utilisateur = state[0];
-            // utilisateur.id = action.payload.id;
+            // utilisateur._id = action.payload._id;
             // utilisateur.pseudo = action.payload.pseudo;
             // utilisateur.email = action.payload.email;
             // utilisateur.estActif = action.payload.estActif;
@@ -27,7 +27,7 @@ export const userSlice = createSlice({
         },
         // effacerInfosUtilisateur: (state, action) => {
             // const utilisateur = state[0];
-            // utilisateur.id = '0';
+            // utilisateur._id = '0';
             // utilisateur.pseudo = '';
             // utilisateur.email = '';
             // utilisateur.estActif = '';

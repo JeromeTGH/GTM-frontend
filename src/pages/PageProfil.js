@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { dateParser } from '../utils';
+import axios from 'axios';
+import { enregistrerInfosUtilisateur } from '../redux/user.slice';
 
 const PageProfil = () => {
 
@@ -11,12 +13,39 @@ const PageProfil = () => {
     const [userEstActif, setUserEstActif] = useState(valeur_initiale_chargement);
 
     const utilisateur = useSelector((donnees) => donnees.user[0]);
+    const dispatch = useDispatch();
+
+    const modifieEnvoiDeEmailsAuto = () => {
+        if(userEstActif !== valeur_initiale_chargement) {           // On ne fait rien, si la valeur "estActif" n'est pas encore chargée
+
+            // Appel axios (si 'estActif' vaut TRUE, alors on lui demande de passer à FALSE ; et vice-versa)
+            axios.put(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/updateOne/${utilisateur._id}`, {estActif: !userEstActif}, { withCredentials: true })
+            .then ((res) => {
+                dispatch(enregistrerInfosUtilisateur(res.data))
+                setUserEstActif(!userEstActif)
+                // On récupère les infos utlisateur, et on les place dans le store
+                // dispatch(enregistrerInfosUtilisateur({
+                //   id: res.data._id,
+                //   pseudo: res.data.pseudo,
+                //   email: res.data.email,
+                //   estActif: res.data.estActif,
+                //   tachespossibles: res.data.tachespossibles,
+                //   createdAt: res.data.createdAt,
+                //   updatedAt: res.data.updatedAt
+                // }));
+              })
+              .catch((err) => {
+                console.log("err", err)
+              })
+        }
+    }
+
 
     useEffect(() => {
         setUserPseudo(utilisateur.pseudo);
         setUserCreatedAt(dateParser(utilisateur.createdAt));
         setUserEmail(utilisateur.email);
-        setUserEstActif(utilisateur.email);
+        setUserEstActif(utilisateur.estActif);
     }, [utilisateur])
 
     return (
@@ -30,9 +59,9 @@ const PageProfil = () => {
                     <p className="main-container-profil-left-btn"><button>Modifier pseudo</button></p>
                     <p className="main-container-profil-left-label">→ Email de correspondance (non modifiable): </p>
                     <p className="main-container-profil-left-texte">{userEmail}</p>
-                    <p className="main-container-profil-left-label">→ Envoi d'email mensuel autorisé ?</p>
+                    <p className="main-container-profil-left-label">→ Envoi d'emails automatiques ? (chaque 1er du mois)</p>
                     <p className="main-container-profil-left-texte">{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'oui' : 'non')}</p>
-                    <p className="main-container-profil-left-btn"><button>{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'Désactiver l\'envoi d\'emails automatiques' : 'Activer l\'envoi d\'emails automatiques')}</button></p>
+                    <p className="main-container-profil-left-btn"><button onClick={() => modifieEnvoiDeEmailsAuto()}>{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'Désactiver l\'envoi d\'emails automatiques' : 'Activer l\'envoi d\'emails automatiques')}</button></p>
                 </div>
                 <div className="main-container-profil-right">
                     <p className="main-container-profil-right-title">Tâches à faire chaque mois</p>

@@ -34,15 +34,16 @@ const App = () => {
           axios.get(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/getOne/${res.data}`, { withCredentials: true })
           .then ((res) => {
             // On récupère les infos utlisateur, et on les place dans le store
-            dispatch(enregistrerInfosUtilisateur({
-              id: res.data._id,
-              pseudo: res.data.pseudo,
-              email: res.data.email,
-              estActif: res.data.estActif,
-              tachespossibles: res.data.tachespossibles,
-              createdAt: res.data.createdAt,
-              updatedAt: res.data.updatedAt
-            }));
+            dispatch(enregistrerInfosUtilisateur(res.data));
+            // dispatch(enregistrerInfosUtilisateur({
+            //   _id: res.data._id,
+            //   pseudo: res.data.pseudo,
+            //   email: res.data.email,
+            //   estActif: res.data.estActif,
+            //   tachespossibles: res.data.tachespossibles,
+            //   createdAt: res.data.createdAt,
+            //   updatedAt: res.data.updatedAt
+            // }));
             setisConnected(true);
             setisLoading(false);
           })
