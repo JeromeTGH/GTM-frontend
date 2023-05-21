@@ -62,6 +62,39 @@ const PageProfil = () => {
         }
     }
 
+    const [titreTacheAajouter, setTitreTacheAajouter] = useState('');
+    const [descriptionTacheAajouter, setDescriptionTacheAajouter] = useState('');
+
+    const ajouteNouvelleTache = (e) => {
+        e.preventDefault();
+
+        const baliseMsgErreurFrmAddTask = document.getElementById('msgErreurFrmAddTask');
+
+        baliseMsgErreurFrmAddTask.innerHTML = '';
+
+        axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/addTask/${utilisateur._id}`,
+            withCredentials: true,
+            data: {
+                libelle: titreTacheAajouter,
+                description: descriptionTacheAajouter
+            }
+        })
+        .then((res) => {
+            if(res.data.erreur) {
+                baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + res.data.erreur;
+            } else {
+                // Il faudra stocker cela dans le store, et rafraîchir l'affichage (react)
+            }
+        })
+        .catch((erreur) => {
+            baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + erreur;
+            console.log(erreur)
+        })
+
+    }
+
     useEffect(() => {
         setUserPseudo(utilisateur.pseudo);
         setUserCreatedAt(dateParser(utilisateur.createdAt));
@@ -87,7 +120,7 @@ const PageProfil = () => {
                     {pseudoEditable === true && (
                         <>
                             <input type="text" className="main-container-profil-left-input" value={nouveauPseudo} onChange={(e) => setNouveauPseudo(e.target.value)} onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
-                            <div className="msgErreur" id="msgErreurModificationPseudo"></div>
+                            <div className="msgErreur alignCenter" id="msgErreurModificationPseudo"></div>
                             <p className="main-container-profil-left-btn">
                                 <button onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
                                 <span>&nbsp;&nbsp;</span>
@@ -115,19 +148,20 @@ const PageProfil = () => {
                             </p>
                         </li>
                         <li className="main-container-profil-right-tachesAfaire">
-                            <form action="">
+                            <form action="" onSubmit={ajouteNouvelleTache} id="frmAddTask">
                                 <p className="main-container-profil-right-tachesAfaire-title">Ajouter une nouvelle tâche</p>
                                 <p className="main-container-profil-right-tachesAfaire-description">
                                     <label htmlFor="titreTache">Titre nouvelle tâche : </label><br />
-                                    <input type="text" name="titreTache" id="titreTache" /><br />
+                                    <input type="text" name="titreTache" id="titreTache" value={titreTacheAajouter} onChange={(e) => setTitreTacheAajouter(e.target.value)} /><br />
                                     <br />
                                     <label htmlFor="descriptionTache">Description nouvelle tâche : </label><br />
-                                    <input type="text" name="descriptionTache" id="descriptionTache" /><br />
+                                    <input type="text" name="descriptionTache" id="descriptionTache" value={descriptionTacheAajouter} onChange={(e) => setDescriptionTacheAajouter(e.target.value)} /><br />
                                     <br />
                                 </p>
-                                <p className="main-container-profil-right-tachesAfaire-btns"><input type="button"
-                                        value="Ajouter" className="btn" id="btnAjouterTache" />
+                                <p className="main-container-profil-right-tachesAfaire-btns">
+                                    <input type="submit" value="Ajouter" className="btn" id="btnAjouterTache" />
                                 </p>
+                                <div className="msgErreur alignCenter" id="msgErreurFrmAddTask"></div>
                             </form>
                         </li>
                     </ul>
