@@ -86,16 +86,49 @@ const PageProfil = () => {
             if(res.data.erreur) {
                 baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + res.data.erreur;
             } else {
-                // Il faudra stocker cela dans le store, et rafraîchir l'affichage (react)
                 dispatch(enregistrerInfosUtilisateur(res.data));
+                setTitreTacheAajouter('');
+                setDescriptionTacheAajouter('');
             }
         })
         .catch((erreur) => {
             baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + erreur;
             console.log(erreur)
         })
+    }
+
+    const editerTache = (idx) => {
+        console.log("editerTache " + idx);
+    }
+
+    const supprimerTache = (idx) => {
+
+        const libelleTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][0];
+        const descriptionTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][1];
+
+        axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/removeTask/${utilisateur._id}`,
+            withCredentials: true,
+            data: {
+                libelle: libelleTachePossibleAsupprimer,
+                description: descriptionTachePossibleAsupprimer
+            }
+        })
+        .then((res) => {
+            if(res.data.erreur) {
+                // Afficher éventuellement une erreur, dans un champ approprié
+            } else {
+                dispatch(enregistrerInfosUtilisateur(res.data));
+            }
+        })
+        .catch((erreur) => {
+            // Afficher éventuellement une erreur, dans un champ approprié
+            console.log(erreur)
+        })
 
     }
+
 
     useEffect(() => {
         setUserPseudo(utilisateur.pseudo);
@@ -140,14 +173,14 @@ const PageProfil = () => {
                 <div className="main-container-profil-right">
                     <p className="main-container-profil-right-title">Tâches à faire chaque mois</p>
                     <ul>
-                        {userTachesPossiblesDeFaire.length > 0 && userTachesPossiblesDeFaire.map((tache) => {
-                            return <li className="main-container-profil-right-tachesAfaire">
+                        {userTachesPossiblesDeFaire.length > 0 && userTachesPossiblesDeFaire.map((tache, idx) => {
+                            return <li key={'tachePossible-' + idx} className="main-container-profil-right-tachesAfaire">
                                 <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
                                 <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
                                 <p className="main-container-profil-right-tachesAfaire-btns">
-                                    <button>Éditer</button>
+                                    <button onClick={() => editerTache(idx)}>Éditer</button>
                                     <span>&nbsp;&nbsp;</span>
-                                    <button>Supprimer</button>
+                                    <button onClick={() => supprimerTache(idx)}>Supprimer</button>
                                 </p>
                             </li>
                         })}
