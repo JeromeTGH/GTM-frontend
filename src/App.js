@@ -64,7 +64,7 @@ const App = () => {
     <>
     {
       isLoading ?
-        (<div>Chargement de la page ...</div>) :
+        (<div>Chargement de la page en cours ...</div>) :
         (isConnected ?
             (<AppRoutes />) :
             (<><NoheaderComponent /><PageConnexion /><div></div></>)

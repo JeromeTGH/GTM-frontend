@@ -7,25 +7,26 @@ const InscriptionLoginComponent = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [msgErreurPseudoInscription, setMsgErreurPseudoInscription] = useState('');
+    const [msgErreurEmailInscription, setMsgErreurEmailInscription] = useState('');
+    const [msgErreurPasswordInscription, setMsgErreurPasswordInscription] = useState('');
+    const [msgErreurConfirmPasswordInscription, setMsgErreurConfirmPasswordInscription] = useState('');
+    const [msgErreurFrmInscription, setMsgErreurFrmInscription] = useState('');
+    const [msgSuccessFrmInscription, setMsgSuccessFrmInscription] = useState('');
+
+
     const executeInscription = (e) => {
         e.preventDefault();
 
-        const baliseMsgErreurPseudo = document.getElementById('erreurPseudoDeInscription');
-        const baliseMsgErreurEmail = document.getElementById('erreurEmailDeInscription');
-        const baliseMsgErreurPassword = document.getElementById('erreurPasswordDeInscription');
-        const baliseMsgErreurConfirmPassword = document.getElementById('erreurConfirmPasswordDeInscription');
-        const baliseMsgErreurFrmInscription = document.getElementById('msgErreurFrmInscription');
-        const baliseMsgSuccessFrmInscription = document.getElementById('msgSuccessFrmInscription');
-
-        baliseMsgErreurPseudo.innerHTML = '';
-        baliseMsgErreurEmail.innerHTML = '';
-        baliseMsgErreurPassword.innerHTML = '';
-        baliseMsgErreurConfirmPassword.innerHTML = '';
-        baliseMsgErreurFrmInscription.innerHTML = '';
-        baliseMsgSuccessFrmInscription.innerHTML = '';
+        setMsgErreurPseudoInscription('');
+        setMsgErreurEmailInscription('');
+        setMsgErreurPasswordInscription('');
+        setMsgErreurConfirmPasswordInscription('');
+        setMsgErreurFrmInscription('');
+        setMsgSuccessFrmInscription('');
 
         if(password !== confirmPassword) {
-            baliseMsgErreurConfirmPassword.innerHTML = 'Les mots de passe ne correspondent pas';
+            setMsgErreurConfirmPasswordInscription('Les mots de passe ne correspondent pas');
         } else {
             axios({
                 method: "post",
@@ -39,11 +40,11 @@ const InscriptionLoginComponent = () => {
             })
             .then((res) => {
                 if(res.data.pseudo || res.data.email || res.data.password) {
-                    baliseMsgErreurPseudo.innerHTML = res.data.pseudo;
-                    baliseMsgErreurEmail.innerHTML = res.data.email;
-                    baliseMsgErreurPassword.innerHTML = res.data.password;
+                    setMsgErreurPseudoInscription(res.data.pseudo);
+                    setMsgErreurEmailInscription(res.data.email);
+                    setMsgErreurPasswordInscription(res.data.password);
                 } else {
-                    baliseMsgSuccessFrmInscription.innerHTML = '<br />Inscription réussie, tentative de connexion automatique en cours...';
+                    setMsgSuccessFrmInscription('<br />Inscription réussie, tentative de connexion automatique en cours...');
     
                     // Tentative de connexion immédiate, après inscription
                     axios({
@@ -64,13 +65,13 @@ const InscriptionLoginComponent = () => {
                         }
                     })
                     .catch((erreur) => {
-                        baliseMsgErreurFrmInscription.innerHTML = '<br />' + erreur;
+                        setMsgErreurFrmInscription(erreur.message);
                         console.log(erreur)
                     })
                 }
             })
             .catch((erreur) => {
-                baliseMsgErreurFrmInscription.innerHTML = '<br />' + erreur;
+                setMsgErreurFrmInscription(erreur.message);
                 console.log(erreur)
             })    
         }
@@ -82,27 +83,27 @@ const InscriptionLoginComponent = () => {
 
             <label htmlFor="pseudoInscription">Pseudo : </label>
             <input type="text" name="pseudoInscription" id="pseudoInscription" onChange={(e) => setPseudo(e.target.value)} value={pseudo} autoComplete="pseudoInscription" />
-            <div className="msgErreur" id="erreurPseudoDeInscription"></div>
+            <div className="msgErreur">{msgErreurPseudoInscription}</div>
             <br />
 
             <label htmlFor="emailInscription">Email : </label>
             <input type="text" name="emailInscription" id="emailInscription" onChange={(e) => setEmail(e.target.value)} value={email} autoComplete="emailInscription" />
-            <div className="msgErreur" id="erreurEmailDeInscription"></div>
+            <div className="msgErreur">{msgErreurEmailInscription}</div>
             <br />
 
             <label htmlFor="mdpInscription">Mot de passe : </label>
             <input type="password" name="mdpInscription" id="mdpInscription" onChange={(e) => setPassword(e.target.value)} value={password} />
-            <div className="msgErreur" id="erreurPasswordDeInscription"></div>
+            <div className="msgErreur">{msgErreurPasswordInscription}</div>
             <br />
 
             <label htmlFor="mdpConfirmInscription">Confirmation mot de passe : </label>
             <input type="password" name="mdpConfirmInscription" id="mdpConfirmInscription" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} />
-            <div className="msgErreur" id="erreurConfirmPasswordDeInscription"></div>
+            <div className="msgErreur">{msgErreurConfirmPasswordInscription}</div>
             <br />
 
             <input type="submit" value="S'inscrire" className="btn" id="btnInscription" />
-            <div className="msgErreur alignCenter" id="msgErreurFrmInscription"></div>
-            <div className="msgSuccess alignCenter" id="msgSuccessFrmInscription"></div>
+            <div className="msgErreur alignCenter mt1rem4">{msgErreurFrmInscription}</div>
+            <div className="msgSuccess alignCenter mt1rem4">{msgSuccessFrmInscription}</div>
         </form>
     );
 };
