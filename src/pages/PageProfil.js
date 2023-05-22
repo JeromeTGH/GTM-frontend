@@ -16,10 +16,17 @@ const PageProfil = () => {
     const [pseudoEditable, setPseudoEditable] = useState(false);        // Par défaut, au lancement de cette page, le pseudo n'est pas "éditable"
     const [nouveauPseudo, setNouveauPseudo] = useState('');             // ou plus exactement, il faut cliquer dessus ou sur le btn, pour le modifier
 
+    const [msgErreurModificationPseudo, setMsgErreurModificationPseudo] = useState('');
+    const [msgErreurModificationEnvoiEmail, setMsgErreurModificationEnvoiEmail] = useState('');
+    const [msgErreurFrmAddTask, setMsgErreurFrmAddTask] = useState('');
+    const [msgErreurRemoveTask, setMsgErreurRemoveTask] = useState([]);
+
     const utilisateur = useSelector((donnees) => donnees.user[0]);
     const dispatch = useDispatch();
 
     const modifieEnvoiDeEmailsAuto = () => {
+        setMsgErreurModificationEnvoiEmail('');
+
         if(userEstActif !== valeur_initiale_chargement) {           // On ne fait rien, si la valeur "estActif" n'est pas encore chargée
 
             // Appel axios (si 'estActif' vaut TRUE, alors on lui demande de passer à FALSE ; et vice-versa)
@@ -29,7 +36,8 @@ const PageProfil = () => {
                 setUserEstActif(!userEstActif)
             })
             .catch((err) => {
-                console.log("err", err)
+                console.log("err", err);
+                setMsgErreurModificationEnvoiEmail(err.message);
             })
         }
     }
@@ -42,17 +50,18 @@ const PageProfil = () => {
                 dispatch(enregistrerInfosUtilisateur(res.data));
                 setPseudoEditable(false);
             } else {
-                console.log("res.data.errors", res.data.errors)
-                document.getElementById('msgErreurModificationPseudo').innerHTML = res.data.errors.pseudo.message;
+                console.log("res.data.errors", res.data.errors);
+                setMsgErreurModificationPseudo(res.data.errors.pseudo.message);
             }
         })
         .catch((err) => {
             console.log("err", err)
-            document.getElementById('msgErreurModificationPseudo').innerHTML = err;
+            setMsgErreurModificationPseudo(err.message);
         })
     }
 
     const rendPseudoEditable = () => {
+        setMsgErreurModificationPseudo('');
         setNouveauPseudo(userPseudo);
         setPseudoEditable(true);
     }
@@ -69,9 +78,7 @@ const PageProfil = () => {
     const ajouteNouvelleTache = (e) => {
         e.preventDefault();
 
-        const baliseMsgErreurFrmAddTask = document.getElementById('msgErreurFrmAddTask');
-
-        baliseMsgErreurFrmAddTask.innerHTML = '';
+        setMsgErreurFrmAddTask('');
 
         axios({
             method: "patch",
@@ -84,7 +91,7 @@ const PageProfil = () => {
         })
         .then((res) => {
             if(res.data.erreur) {
-                baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + res.data.erreur;
+                setMsgErreurFrmAddTask(res.data.erreur);
             } else {
                 dispatch(enregistrerInfosUtilisateur(res.data));
                 setTitreTacheAajouter('');
@@ -92,7 +99,7 @@ const PageProfil = () => {
             }
         })
         .catch((erreur) => {
-            baliseMsgErreurFrmAddTask.innerHTML = '<br />[ERREUR] ' + erreur;
+            setMsgErreurFrmAddTask(erreur.message);
             console.log(erreur)
         })
     }
@@ -106,6 +113,8 @@ const PageProfil = () => {
         const libelleTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][0];
         const descriptionTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][1];
 
+        setMsgErreurRemoveTask(Array.from(''.repeat(userTachesPossiblesDeFaire.length)));
+
         axios({
             method: "patch",
             url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/removeTask/${utilisateur._id}`,
@@ -118,13 +127,17 @@ const PageProfil = () => {
         .then((res) => {
             if(res.data.erreur) {
                 // Afficher éventuellement une erreur, dans un champ approprié
+                setMsgErreurRemoveTask[idx] = (res.data.erreur);
             } else {
                 dispatch(enregistrerInfosUtilisateur(res.data));
             }
         })
         .catch((erreur) => {
             // Afficher éventuellement une erreur, dans un champ approprié
-            console.log(erreur)
+            const newMsgErreurRemoveTask = Array.from(''.repeat(userTachesPossiblesDeFaire.length));
+            newMsgErreurRemoveTask[idx] = erreur.message;
+            setMsgErreurRemoveTask(newMsgErreurRemoveTask);
+            console.log("erreur", erreur);
         })
 
     }
@@ -136,6 +149,7 @@ const PageProfil = () => {
         setUserEmail(utilisateur.email);
         setUserEstActif(utilisateur.estActif);
         setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
+        setMsgErreurRemoveTask(Array.from(''.repeat(utilisateur.tachespossibles.length)))
     }, [utilisateur])
 
     return (
@@ -156,7 +170,7 @@ const PageProfil = () => {
                     {pseudoEditable === true && (
                         <>
                             <input type="text" className="main-container-profil-left-input" value={nouveauPseudo} onChange={(e) => setNouveauPseudo(e.target.value)} onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
-                            <div className="msgErreur alignCenter" id="msgErreurModificationPseudo"></div>
+                            <div className="msgErreur alignCenter">{msgErreurModificationPseudo}</div>
                             <p className="main-container-profil-left-btn">
                                 <button onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
                                 <span>&nbsp;&nbsp;</span>
@@ -169,6 +183,7 @@ const PageProfil = () => {
                     <p className="main-container-profil-left-label">→ Envoi d'emails automatiques ? (chaque 1er du mois)</p>
                     <p className="main-container-profil-left-texte">{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'oui' : 'non')}</p>
                     <p className="main-container-profil-left-btn"><button onClick={() => modifieEnvoiDeEmailsAuto()}>{userEstActif === valeur_initiale_chargement ? valeur_initiale_chargement : (userEstActif ? 'Désactiver l\'envoi d\'emails automatiques' : 'Activer l\'envoi d\'emails automatiques')}</button></p>
+                    <div className="msgErreur alignCenter mt1rem4">{msgErreurModificationEnvoiEmail}</div>
                 </div>
                 <div className="main-container-profil-right">
                     <p className="main-container-profil-right-title">Tâches à faire chaque mois</p>
@@ -177,11 +192,12 @@ const PageProfil = () => {
                             return <li key={'tachePossible-' + idx} className="main-container-profil-right-tachesAfaire">
                                 <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
                                 <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
-                                <p className="main-container-profil-right-tachesAfaire-btns">
+                                <div className="main-container-profil-right-tachesAfaire-btns">
                                     <button onClick={() => editerTache(idx)}>Éditer</button>
                                     <span>&nbsp;&nbsp;</span>
                                     <button onClick={() => supprimerTache(idx)}>Supprimer</button>
-                                </p>
+                                    <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div>
+                                </div>
                             </li>
                         })}
                         {userTachesPossiblesDeFaire.length === 0 && (
@@ -204,7 +220,7 @@ const PageProfil = () => {
                                 <p className="main-container-profil-right-tachesAfaire-btns">
                                     <input type="submit" value="Ajouter" className="btn" id="btnAjouterTache" />
                                 </p>
-                                <div className="msgErreur alignCenter" id="msgErreurFrmAddTask"></div>
+                                <div className="msgErreur alignCenter mt1rem4">{msgErreurFrmAddTask}</div>
                             </form>
                         </li>
                     </ul>
