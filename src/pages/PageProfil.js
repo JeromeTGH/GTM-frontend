@@ -19,7 +19,7 @@ const PageProfil = () => {
     const [msgErreurModificationPseudo, setMsgErreurModificationPseudo] = useState('');
     const [msgErreurModificationEnvoiEmail, setMsgErreurModificationEnvoiEmail] = useState('');
     const [msgErreurFrmAddTask, setMsgErreurFrmAddTask] = useState('');
-    const [msgErreurRemoveTask, setMsgErreurRemoveTask] = useState([]);
+    const [msgErreurOnTaskChange, setMsgErreurOnTaskChange] = useState([]);
 
     const [tachesEditables, setTachesEditables] = useState([]);
     const [nouvellesTaches, setNouvellesTaches] = useState([]);
@@ -108,32 +108,35 @@ const PageProfil = () => {
         const libelleTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][0];
         const descriptionTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][1];
 
-        setMsgErreurRemoveTask(new Array(userTachesPossiblesDeFaire.length).fill(''));
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?") === true) {
 
-        axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/removeTask/${utilisateur._id}`,
-            withCredentials: true,
-            data: {
-                libelle: libelleTachePossibleAsupprimer,
-                description: descriptionTachePossibleAsupprimer
-            }
-        })
-        .then((res) => {
-            if(res.data.erreur) {
+            setMsgErreurOnTaskChange(new Array(userTachesPossiblesDeFaire.length).fill(''));
+
+            axios({
+                method: "patch",
+                url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/removeTask/${utilisateur._id}`,
+                withCredentials: true,
+                data: {
+                    libelle: libelleTachePossibleAsupprimer,
+                    description: descriptionTachePossibleAsupprimer
+                }
+            })
+            .then((res) => {
+                if(res.data.erreur) {
+                    // Afficher éventuellement une erreur, dans un champ approprié
+                    console.log(res.data.erreur);
+                } else {
+                    dispatch(enregistrerInfosUtilisateur(res.data));
+                }
+            })
+            .catch((erreur) => {
                 // Afficher éventuellement une erreur, dans un champ approprié
-                console.log(res.data.erreur);
-            } else {
-                dispatch(enregistrerInfosUtilisateur(res.data));
-            }
-        })
-        .catch((erreur) => {
-            // Afficher éventuellement une erreur, dans un champ approprié
-            const newMsgErreurRemoveTask = new Array(userTachesPossiblesDeFaire.length).fill('');
-            newMsgErreurRemoveTask[idx] = erreur.message;
-            setMsgErreurRemoveTask(newMsgErreurRemoveTask);
-            console.log("erreur", erreur);
-        })
+                const newMsgErreurOnTaskChange = new Array(userTachesPossiblesDeFaire.length).fill('');
+                newMsgErreurOnTaskChange[idx] = erreur.message;
+                setMsgErreurOnTaskChange(newMsgErreurOnTaskChange);
+                console.log("erreur", erreur);
+            })
+        }
 
     }
 
@@ -146,10 +149,46 @@ const PageProfil = () => {
         setTachesEditables(tachesEditables => [...newTachesEditables]);
     }
 
+    const setNouvelleTache = (idxTache, champTache, nouvelleValeur) => {
+        const newNouvellesTaches = [...nouvellesTaches];
+        if(champTache === 0)
+            newNouvellesTaches[idxTache] = [nouvelleValeur, newNouvellesTaches[idxTache][1]];
+        else if (champTache ===1)
+            newNouvellesTaches[idxTache] = [newNouvellesTaches[idxTache][0], nouvelleValeur];
+        setNouvellesTaches(nouvellesTaches => [...newNouvellesTaches]);
+    }
+
     const mettreAjourTache = idx => e => {
         e.preventDefault();
+        
+        setMsgErreurOnTaskChange(new Array(userTachesPossiblesDeFaire.length).fill(''));
 
-        console.log('idx', idx);
+        axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/updateTask/${utilisateur._id}`,
+            withCredentials: true,
+            data: {
+                old_libelle: userTachesPossiblesDeFaire[idx][0],
+                old_description:  userTachesPossiblesDeFaire[idx][1],
+                new_libelle: nouvellesTaches[idx][0],
+                new_description: nouvellesTaches[idx][1]
+            }
+        })
+        .then((res) => {
+            if(res.data.erreur) {
+                // Afficher éventuellement une erreur, dans un champ approprié
+                console.log(res.data.erreur);
+            } else {
+                dispatch(enregistrerInfosUtilisateur(res.data));
+            }
+        })
+        .catch((erreur) => {
+            // Afficher éventuellement une erreur, dans un champ approprié
+            const newMsgErreurOnTaskChange = new Array(userTachesPossiblesDeFaire.length).fill('');
+            newMsgErreurOnTaskChange[idx] = erreur.message;
+            setMsgErreurOnTaskChange(newMsgErreurOnTaskChange);
+            console.log("erreur", erreur);
+        })
     }
 
 
@@ -159,7 +198,7 @@ const PageProfil = () => {
         setUserEmail(utilisateur.email);
         setUserEstActif(utilisateur.estActif);
         setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
-        setMsgErreurRemoveTask(new Array(utilisateur.tachespossibles.length).fill(''))
+        setMsgErreurOnTaskChange(new Array(utilisateur.tachespossibles.length).fill(''))
 
         setTachesEditables(new Array(utilisateur.tachespossibles.length).fill(false))
         setNouvellesTaches(utilisateur.tachespossibles);    
@@ -214,22 +253,20 @@ const PageProfil = () => {
                                             <button type="button" onClick={() => editerTache(idx, true)}>Éditer</button>
                                             <span>&nbsp;&nbsp;</span>
                                             <button type="button" onClick={() => supprimerTache(idx)}>Supprimer</button>
-                                            <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div>
+                                            <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
                                         </div>
                                     </>
                                 }
                                 {tachesEditables[idx] === true && 
                                     <>
                                         <form onSubmit={mettreAjourTache(idx)}>
-                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouveauPseudo(e.target.value)} />
-                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouveauPseudo(e.target.value)} />
+                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouvelleTache(idx, 0, e.target.value)} />
+                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][1]} onChange={(e) => setNouvelleTache(idx, 1, e.target.value)} />
                                             <div className="main-container-profil-right-tachesAfaire-btns">
                                                 <button type="button" onClick={() => editerTache(idx, false)}>Annuler édition</button>
                                                 <span>&nbsp;&nbsp;</span>
                                                 <button type="submit">Enregistrer changements</button>
-                                                <span>&nbsp;&nbsp;</span>
-                                                {/* <button onClick={() => supprimerTache(idx)}>Supprimer</button>
-                                                <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div> */}
+                                                <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
                                             </div>
                                         </form>
                                     </>
