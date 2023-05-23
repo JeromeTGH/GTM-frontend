@@ -21,6 +21,9 @@ const PageProfil = () => {
     const [msgErreurFrmAddTask, setMsgErreurFrmAddTask] = useState('');
     const [msgErreurRemoveTask, setMsgErreurRemoveTask] = useState([]);
 
+    const [tachesEditables, setTachesEditables] = useState([]);
+    const [nouvellesTaches, setNouvellesTaches] = useState([]);
+
     const utilisateur = useSelector((donnees) => donnees.user[0]);
     const dispatch = useDispatch();
 
@@ -100,16 +103,12 @@ const PageProfil = () => {
         })
     }
 
-    const editerTache = (idx) => {
-        console.log("editerTache " + idx);
-    }
-
     const supprimerTache = (idx) => {
 
         const libelleTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][0];
         const descriptionTachePossibleAsupprimer = userTachesPossiblesDeFaire[idx][1];
 
-        setMsgErreurRemoveTask(Array.from(''.repeat(userTachesPossiblesDeFaire.length)));
+        setMsgErreurRemoveTask(new Array(userTachesPossiblesDeFaire.length).fill(''));
 
         axios({
             method: "patch",
@@ -123,19 +122,34 @@ const PageProfil = () => {
         .then((res) => {
             if(res.data.erreur) {
                 // Afficher éventuellement une erreur, dans un champ approprié
-                setMsgErreurRemoveTask[idx] = (res.data.erreur);
+                console.log(res.data.erreur);
             } else {
                 dispatch(enregistrerInfosUtilisateur(res.data));
             }
         })
         .catch((erreur) => {
             // Afficher éventuellement une erreur, dans un champ approprié
-            const newMsgErreurRemoveTask = Array.from(''.repeat(userTachesPossiblesDeFaire.length));
+            const newMsgErreurRemoveTask = new Array(userTachesPossiblesDeFaire.length).fill('');
             newMsgErreurRemoveTask[idx] = erreur.message;
             setMsgErreurRemoveTask(newMsgErreurRemoveTask);
             console.log("erreur", erreur);
         })
 
+    }
+
+
+    const editerTache = (idx, etat) => {
+        const newTachesEditables = tachesEditables;
+        newTachesEditables[idx] = etat;
+     
+        //setTachesEditables(newTachesEditables);   // ne fonctionne pas, avec ce tableau
+        setTachesEditables(tachesEditables => [...newTachesEditables]);
+    }
+
+    const mettreAjourTache = idx => e => {
+        e.preventDefault();
+
+        console.log('idx', idx);
     }
 
 
@@ -145,7 +159,10 @@ const PageProfil = () => {
         setUserEmail(utilisateur.email);
         setUserEstActif(utilisateur.estActif);
         setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
-        setMsgErreurRemoveTask(Array.from(''.repeat(utilisateur.tachespossibles.length)))
+        setMsgErreurRemoveTask(new Array(utilisateur.tachespossibles.length).fill(''))
+
+        setTachesEditables(new Array(utilisateur.tachespossibles.length).fill(false))
+        setNouvellesTaches(utilisateur.tachespossibles);    
     }, [utilisateur])
 
     return (
@@ -188,14 +205,35 @@ const PageProfil = () => {
                     <ul>
                         {userTachesPossiblesDeFaire.length > 0 && userTachesPossiblesDeFaire.map((tache, idx) => {
                             return <li key={'tachePossible-' + idx} className="main-container-profil-right-tachesAfaire">
-                                <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
-                                <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
-                                <div className="main-container-profil-right-tachesAfaire-btns">
-                                    <button onClick={() => editerTache(idx)}>Éditer</button>
-                                    <span>&nbsp;&nbsp;</span>
-                                    <button onClick={() => supprimerTache(idx)}>Supprimer</button>
-                                    <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div>
-                                </div>
+                                <p>{tachesEditables}</p>
+                                {tachesEditables[idx] === false && 
+                                    <>
+                                        <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
+                                        <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
+                                        <div className="main-container-profil-right-tachesAfaire-btns">
+                                            <button type="button" onClick={() => editerTache(idx, true)}>Éditer</button>
+                                            <span>&nbsp;&nbsp;</span>
+                                            <button type="button" onClick={() => supprimerTache(idx)}>Supprimer</button>
+                                            <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div>
+                                        </div>
+                                    </>
+                                }
+                                {tachesEditables[idx] === true && 
+                                    <>
+                                        <form onSubmit={mettreAjourTache(idx)}>
+                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouveauPseudo(e.target.value)} />
+                                            <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouveauPseudo(e.target.value)} />
+                                            <div className="main-container-profil-right-tachesAfaire-btns">
+                                                <button type="button" onClick={() => editerTache(idx, false)}>Annuler édition</button>
+                                                <span>&nbsp;&nbsp;</span>
+                                                <button type="submit">Enregistrer changements</button>
+                                                <span>&nbsp;&nbsp;</span>
+                                                {/* <button onClick={() => supprimerTache(idx)}>Supprimer</button>
+                                                <div className="msgErreur alignCenter mt1rem4">{msgErreurRemoveTask[idx]}</div> */}
+                                            </div>
+                                        </form>
+                                    </>
+                                }
                             </li>
                         })}
                         {userTachesPossiblesDeFaire.length === 0 && (
