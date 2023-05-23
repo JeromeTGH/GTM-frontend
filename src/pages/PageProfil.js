@@ -42,7 +42,9 @@ const PageProfil = () => {
         }
     }
 
-    const enregistreNouveauPseudo = () => {
+    const enregistreNouveauPseudo = (e) => {
+        e.preventDefault();
+
         // Appel axios (enregistrement nouveau pseudo)
         axios.put(`${process.env.REACT_APP_URL_DE_LAPI}/api/utilisateurs/updateOne/${utilisateur._id}`, {pseudo: nouveauPseudo}, { withCredentials: true })
         .then ((res) => {
@@ -64,12 +66,6 @@ const PageProfil = () => {
         setMsgErreurModificationPseudo('');
         setNouveauPseudo(userPseudo);
         setPseudoEditable(true);
-    }
-
-    const checkToucheAppuyeeChampPseudo = (e) => {
-        if(e.keyCode === 13) {
-            enregistreNouveauPseudo();
-        }
     }
 
     const [titreTacheAajouter, setTitreTacheAajouter] = useState('');
@@ -169,13 +165,15 @@ const PageProfil = () => {
                     )}
                     {pseudoEditable === true && (
                         <>
-                            <input type="text" className="main-container-profil-left-input" value={nouveauPseudo} onChange={(e) => setNouveauPseudo(e.target.value)} onKeyDown={(e) => checkToucheAppuyeeChampPseudo(e)} />
-                            <div className="msgErreur alignCenter">{msgErreurModificationPseudo}</div>
-                            <p className="main-container-profil-left-btn">
-                                <button onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
-                                <span>&nbsp;&nbsp;</span>
-                                <button onClick={() => enregistreNouveauPseudo()}>Enregistrer modifications pseudo</button>
-                            </p>
+                            <form onSubmit={enregistreNouveauPseudo}>
+                                <input type="text" className="main-container-profil-left-input" value={nouveauPseudo} onChange={(e) => setNouveauPseudo(e.target.value)} />
+                                <div className="msgErreur alignCenter">{msgErreurModificationPseudo}</div>
+                                <p className="main-container-profil-left-btn">
+                                    <button type="button" onClick={() => setPseudoEditable(false)}>Annuler édition pseudo</button>
+                                    <span>&nbsp;&nbsp;</span>
+                                    <button type="submit">Enregistrer modifications pseudo</button>
+                                </p>
+                            </form>
                         </>
                     )}
                     <p className="main-container-profil-left-label">→ Email de correspondance (non modifiable): </p>
