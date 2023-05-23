@@ -75,7 +75,12 @@
                 font-style: italic;
             }
 
-            .main-container-profil-right-tachesAfaire-btns {
+            .main-container-profil-right-tachesAfaire-btns-1 {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .main-container-profil-right-tachesAfaire-btns-2, .main-container-profil-right-tachesAfaire-btns-3 {
                 text-align: right;
             }
 

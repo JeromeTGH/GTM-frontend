@@ -142,9 +142,15 @@ const PageProfil = () => {
 
 
     const editerTache = (idx, etat) => {
+
+        // Initialisation des textes
+        const newNouvellesTaches = [...nouvellesTaches];
+        newNouvellesTaches[idx] = userTachesPossiblesDeFaire[idx];
+        setNouvellesTaches(nouvellesTaches => [...newNouvellesTaches]);
+
+        // Switch d'aperçu
         const newTachesEditables = tachesEditables;
-        newTachesEditables[idx] = etat;
-     
+        newTachesEditables[idx] = etat;     
         //setTachesEditables(newTachesEditables);   // ne fonctionne pas, avec ce tableau
         setTachesEditables(tachesEditables => [...newTachesEditables]);
     }
@@ -201,7 +207,7 @@ const PageProfil = () => {
         setMsgErreurOnTaskChange(new Array(utilisateur.tachespossibles.length).fill(''))
 
         setTachesEditables(new Array(utilisateur.tachespossibles.length).fill(false))
-        setNouvellesTaches(utilisateur.tachespossibles);    
+        setNouvellesTaches(utilisateur.tachespossibles);
     }, [utilisateur])
 
     return (
@@ -249,12 +255,11 @@ const PageProfil = () => {
                                     <>
                                         <p className="main-container-profil-right-tachesAfaire-title">{tache[0]}</p>
                                         <p className="main-container-profil-right-tachesAfaire-description">{tache[1]}</p>
-                                        <div className="main-container-profil-right-tachesAfaire-btns">
-                                            <button type="button" onClick={() => editerTache(idx, true)}>Éditer</button>
-                                            <span>&nbsp;&nbsp;</span>
+                                        <div className="main-container-profil-right-tachesAfaire-btns-1">
                                             <button type="button" onClick={() => supprimerTache(idx)}>Supprimer</button>
-                                            <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
+                                            <button type="button" onClick={() => editerTache(idx, true)}>Éditer</button>
                                         </div>
+                                        <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
                                     </>
                                 }
                                 {tachesEditables[idx] === true && 
@@ -262,12 +267,12 @@ const PageProfil = () => {
                                         <form onSubmit={mettreAjourTache(idx)}>
                                             <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][0]} onChange={(e) => setNouvelleTache(idx, 0, e.target.value)} />
                                             <input type="text" className="main-container-profil-right-input" value={nouvellesTaches[idx][1]} onChange={(e) => setNouvelleTache(idx, 1, e.target.value)} />
-                                            <div className="main-container-profil-right-tachesAfaire-btns">
+                                            <div className="main-container-profil-right-tachesAfaire-btns-2">
                                                 <button type="button" onClick={() => editerTache(idx, false)}>Annuler édition</button>
                                                 <span>&nbsp;&nbsp;</span>
                                                 <button type="submit">Enregistrer changements</button>
-                                                <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
                                             </div>
+                                            <div className="msgErreur alignCenter mt1rem4">{msgErreurOnTaskChange[idx]}</div>
                                         </form>
                                     </>
                                 }
@@ -290,8 +295,8 @@ const PageProfil = () => {
                                     <input type="text" name="descriptionTache" id="descriptionTache" value={descriptionTacheAajouter} onChange={(e) => setDescriptionTacheAajouter(e.target.value)} /><br />
                                     <br />
                                 </p>
-                                <p className="main-container-profil-right-tachesAfaire-btns">
-                                    <input type="submit" value="Ajouter" className="btn" id="btnAjouterTache" />
+                                <p className="main-container-profil-right-tachesAfaire-btns-3">
+                                    <button type="submit">Ajouter</button>
                                 </p>
                                 <div className="msgErreur alignCenter mt1rem4">{msgErreurFrmAddTask}</div>
                             </form>
