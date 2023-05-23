@@ -285,7 +285,7 @@ const PageProfil = () => {
                         )}
 
                         <li className="main-container-profil-right-tachesAfaire">
-                            <form action="" onSubmit={ajouteNouvelleTache} id="frmAddTask">
+                            <form onSubmit={ajouteNouvelleTache}>
                                 <p className="main-container-profil-right-tachesAfaire-title">Ajouter une nouvelle tâche</p>
                                 <p className="main-container-profil-right-tachesAfaire-description">
                                     <label htmlFor="titreTache">Titre nouvelle tâche : </label><br />
