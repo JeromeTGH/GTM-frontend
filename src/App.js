@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import AppRoutes from './components/AppRoutes';
+import AppRoutes from './pages/AppRoutes';
 import { useDispatch } from 'react-redux';
 import { enregistrerInfosUtilisateur } from './redux/user.slice';
 
 import axios from 'axios';
 
-import NoheaderComponent from './components/NoheaderComponent';
-import PageConnexion from './pages/PageConnexion';
+import NoheaderComponent from './sharedComponents/NoheaderComponent';
+import PageConnexion from './pages/PageConnexion/PageConnexion';
 
 const App = () => {
  

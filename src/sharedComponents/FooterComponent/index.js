@@ -8,7 +8,7 @@ const index = () => {
                 <div>
                     <p className="souligne">Site GTM (partie prépa. CSS)</p>
                     <p>@2023 Copyright</p>
-                    <p>Nota : apprentissage SASS / non responsive</p>
+                    <p>Nota : apprentissage REACT et SASS (site "non responsive")</p>
                 </div>
                 <div>
                     <div>

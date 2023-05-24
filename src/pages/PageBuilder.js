@@ -1,14 +1,14 @@
 import React from 'react';
 
-import NoheaderComponent from './NoheaderComponent';
-import HeaderComponent from './HeaderComponent';
-import FooterComponent from './FooterComponent';
+import NoheaderComponent from '../sharedComponents/NoheaderComponent';
+import HeaderComponent from '../sharedComponents/HeaderComponent';
+import FooterComponent from '../sharedComponents/FooterComponent';
 
-import PageAccueil from '../pages/PageAccueil';
+import PageAccueil from './PageAccueil/PageAccueil';
 import PageProfil from './PageProfil/PageProfil';
-import PageAfficheToutesLesListesDeTaches from '../pages/PageAfficheToutesLesListesDeTaches';
-import PageAfficheUneListeDeTaches from '../pages/PageAfficheUneListeDeTaches';
-import Page404 from '../pages/Page404';
+import PageAfficheToutesLesListesDeTaches from './PageAfficheToutesLesListesDeTaches/PageAfficheToutesLesListesDeTaches';
+import PageAfficheUneListeDeTaches from './PageAfficheUneListeDeTaches/PageAfficheUneListeDeTaches';
+import Page404 from './Page404/Page404';
 
 const PageBuilder = (props) => {
 
