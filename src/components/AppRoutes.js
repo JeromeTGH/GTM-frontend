@@ -19,8 +19,6 @@ const AppRoutes = () => {
                 <Route path="/connexion" exact element={
                     <Navigate replace to="/" />} />
                     {/* Nota : la page de connexion "login" renvoit vers l'accueil ; l'utilisateur devra utiliser le bouton "logout" */}
-                <Route path="/pointageTachesAfaire" exact element={
-                    <PageBuilder withHeader="yes" targetPage="/pointageTachesAfaire" />} />
                 <Route path="/404" exact element={
                     <PageBuilder withHeader="yes" targetPage="/404" />} />
                 <Route path="*" element={<Navigate replace to="/404" />} />
