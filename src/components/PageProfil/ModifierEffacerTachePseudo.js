@@ -5,7 +5,6 @@ import { enregistrerInfosUtilisateur } from '../../redux/user.slice';
 
 const ModifierEffacerTachePseudo = () => {
 
-    // const valeur_initiale_chargement = '(en cours de chargement...)';
     const [msgErreurOnTaskChange, setMsgErreurOnTaskChange] = useState([]);
     const [userTachesPossiblesDeFaire, setUserTachesPossiblesDeFaire] = useState([]);
 
@@ -38,6 +37,9 @@ const ModifierEffacerTachePseudo = () => {
                     // Afficher éventuellement une erreur, dans un champ approprié
                     console.log(res.data.erreur);
                 } else {
+                    const newTachesEditables = [...tachesEditables];
+                    newTachesEditables.splice(idx, 1);
+                    setTachesEditables(tachesEditables => [...newTachesEditables]);
                     dispatch(enregistrerInfosUtilisateur(res.data));
                 }
             })
@@ -95,6 +97,9 @@ const ModifierEffacerTachePseudo = () => {
                 // Afficher éventuellement une erreur, dans un champ approprié
                 console.log(res.data.erreur);
             } else {
+                const newTachesEditables = [...tachesEditables];
+                newTachesEditables[idx] = false;
+                setTachesEditables(tachesEditables => [...newTachesEditables]);
                 dispatch(enregistrerInfosUtilisateur(res.data));
             }
         })
@@ -107,15 +112,23 @@ const ModifierEffacerTachePseudo = () => {
         })
     }
 
-
     useEffect(() => {
         setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
         setMsgErreurOnTaskChange(new Array(utilisateur.tachespossibles.length).fill(''))
-
-        setTachesEditables(new Array(utilisateur.tachespossibles.length).fill(false))
         setNouvellesTaches(utilisateur.tachespossibles);
 
     }, [utilisateur])
+
+    useEffect(() => {
+        if(tachesEditables.length === 0)
+            setTachesEditables(new Array(utilisateur.tachespossibles.length).fill(false))
+        if(tachesEditables.length !== utilisateur.tachespossibles.length) {
+            for(let i=0 ; i < utilisateur.tachespossibles.length ; i++) {
+                if(tachesEditables[i] === undefined)
+                    tachesEditables.push(false)
+            }
+        }
+    }, [utilisateur, tachesEditables])
 
     return (
         <>

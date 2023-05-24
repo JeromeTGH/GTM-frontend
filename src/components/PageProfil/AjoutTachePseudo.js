@@ -5,7 +5,6 @@ import { enregistrerInfosUtilisateur } from '../../redux/user.slice';
 
 const AjoutTachePseudo = () => {
 
-    // const valeur_initiale_chargement = '(en cours de chargement...)';
     const [msgErreurFrmAddTask, setMsgErreurFrmAddTask] = useState('');
     const [titreTacheAajouter, setTitreTacheAajouter] = useState('');
     const [descriptionTacheAajouter, setDescriptionTacheAajouter] = useState('');
