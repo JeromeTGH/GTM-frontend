@@ -37,9 +37,15 @@ const ModifierEffacerTachePseudo = () => {
                     // Afficher éventuellement une erreur, dans un champ approprié
                     console.log(res.data.erreur);
                 } else {
+                    // Met à jour le tableau des éléments éditables
                     const newTachesEditables = [...tachesEditables];
                     newTachesEditables.splice(idx, 1);
                     setTachesEditables(tachesEditables => [...newTachesEditables]);
+                    // Met à jour le contenu des taches éditables
+                    const newNouvellesTaches = [...nouvellesTaches];
+                    newNouvellesTaches.splice(idx, 1);
+                    setNouvellesTaches(nouvellesTaches => [...newNouvellesTaches]);
+                    // Met à jour le store utilisateur
                     dispatch(enregistrerInfosUtilisateur(res.data));
                 }
             })
@@ -115,8 +121,6 @@ const ModifierEffacerTachePseudo = () => {
     useEffect(() => {
         setUserTachesPossiblesDeFaire(utilisateur.tachespossibles);
         setMsgErreurOnTaskChange(new Array(utilisateur.tachespossibles.length).fill(''))
-        setNouvellesTaches(utilisateur.tachespossibles);
-
     }, [utilisateur])
 
     useEffect(() => {
@@ -129,6 +133,17 @@ const ModifierEffacerTachePseudo = () => {
             }
         }
     }, [utilisateur, tachesEditables])
+
+    useEffect(() => {
+        if(nouvellesTaches.length === 0)
+            setNouvellesTaches(utilisateur.tachespossibles);
+        if(nouvellesTaches.length !== utilisateur.tachespossibles.length) {
+            for(let i=0 ; i < utilisateur.tachespossibles.length ; i++) {
+                if(nouvellesTaches[i] === undefined)
+                nouvellesTaches.push(false)
+            }
+        }
+    }, [utilisateur, nouvellesTaches])
 
     return (
         <>
